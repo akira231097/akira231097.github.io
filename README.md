@@ -1,6 +1,6 @@
 # Sarath Gentela's portfolio
 
-A static React, TypeScript, and Vite portfolio focused on agent harnesses, multi-stage search and ranking, and asynchronous AI infrastructure. It includes production implementation summaries, interactive architecture diagrams, five source-linked engineering cases, and a separate evidence page with saved local runs.
+A static React, TypeScript, and Vite portfolio focused on agent harnesses, mobile on-device AI, multi-stage search and ranking, and asynchronous AI infrastructure. It includes production implementation summaries, interactive architecture diagrams, six source-linked engineering cases, and a separate evidence page with saved local runs for the original five cases. FinishOS evidence is linked from its public repository.
 
 Public website: **[akira231097.github.io](https://akira231097.github.io/)**.
 
@@ -32,13 +32,13 @@ Open [http://127.0.0.1:4174](http://127.0.0.1:4174). Use an HTTP server rather t
 | `src/EngineeringPortfolio.tsx`            | Main page, navigation, production/project presentation, experience, contact, and case-study dialog |
 | `src/productionData.ts`                   | Lucidream and AskSpice implementation areas, outcomes, stacks, and attribution                     |
 | `src/architectureData.ts`                 | Agent-harness, search/ranking, and asynchronous-workflow diagrams                                  |
-| `src/engineeringData.ts`                  | Independent project architectures, mechanisms, tradeoffs, results, and source links                |
+| `src/engineeringData.ts`                  | Public project architectures, mechanisms, tradeoffs, results, and source links                      |
 | `src/components/ArchitectureExplorer.tsx` | Interactive diagram rendering and component details                                                |
 | `src/engineering.css`                     | Dark technical visual design and responsive layouts                                                |
 | `src/components/ArchitectureExplorer.css` | Architecture-diagram styling                                                                       |
 | `public/evidence.html`                    | Public-project run record and saved-output replay page                                             |
 | `public/evidence/`                        | Saved synthetic outputs, verification notes, and reproducibility wrappers                          |
-| `public/assets/`                          | Product screenshots and portrait                                                                   |
+| `public/assets/`                          | Product screenshots, including fictional FinishOS phone captures, and portrait                     |
 | `public/sarath-ai-ml-engineer-resume.pdf` | Supplied résumé, linked from the page                                                              |
 | `index.html`                              | Page metadata                                                                                      |
 

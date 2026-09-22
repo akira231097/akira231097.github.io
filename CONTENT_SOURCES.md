@@ -21,12 +21,16 @@ Private repository review informed the contribution audit. The public site and h
 
 ## Visual asset provenance
 
+- `public/assets/finishos-reply-review.png` and `public/assets/finishos-form-applied.png` were captured directly from the connected Samsung SM-S948U using the FinishOS Android test build. Both use fictional people and form answers. The reply screen uses a deterministic backend to display a repeatable draft; it is a real UI capture, not a real-model quality example. The form screenshot shows the fictional Android practice form after explicit reviewed application. Its password/payment fields remain blank and nothing was submitted. The private form review activity blocks screenshots, and no attempt was made to bypass that control.
+
 - `public/assets/sarath-profile.jpg`, used in the technical portfolio, is Sarath's portrait from his public LinkedIn profile.
 - `public/assets/lucidream-public-editor.jpg` is a retained capture of the editor feature on Lucidream's public landing page. It shows the product's **public marketing presentation**, not a recorded authenticated editing session.
 - `public/assets/lucidream-social-planner.png` is retained public product imagery. It does not establish individual authorship of the pictured feature.
 - Social preview artwork and the interactive diagrams were authored for this portfolio. They are presentation assets, not screenshots of private systems.
 
 ## Independent project evidence
+
+[FinishOS](https://github.com/akira231097/FinishOS/tree/3f76a57a80142910dcf7878aac03cba8c49ac701) is an Android implementation built on [EdgeChat](https://github.com/RishikeshAluguvelli/EdgeChat) under its retained MIT license. It is a public source case alongside the five independent cases below; it is not presented as an original implementation of the upstream iOS inference engine. Its pinned repository contains the two fictional phone screenshots, current Android code, device checks and scoped evidence. Recorded results include 82 JVM tests and exact signed-app workflows on a Samsung S26 Ultra. The reported 4.470-second fresh reply and 119-millisecond cached return are individual observations, not latency guarantees.
 
 | Public repository                                                                                                                                   | What the portfolio demonstrates                                                                                                                         |
 | --------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -36,7 +40,7 @@ Private repository review informed the contribution audit. The public site and h
 | [Commitment Decay Engine · reviewed revision](https://github.com/akira231097/commitment-decay-engine/tree/6068ad45bddbe777261a030b0d7618018d629fe7) | Deterministic extraction, markdown persistence, lexical evidence matching, and bounded nudge policy using fictional fixtures                            |
 | [ReelForge · reviewed revision](https://github.com/akira231097/reelforge/tree/c0d08c8de046901ba429b183e5c849335a25aa34)                             | Typed media stages, model-assisted planning, asset routing, timing corrections, and component tests; no complete video render was measured              |
 
-`src/engineeringData.ts` supplies the five public technical cases: stack boundaries, ordered stages, conditional paths, engineering decisions and tradeoffs, scoped results, limitations, and code links pinned to the reviewed commits. Source-code links describe those specific revisions rather than an unverified moving branch.
+`src/engineeringData.ts` supplies six public technical cases: stack boundaries, ordered stages, conditional paths, engineering decisions and tradeoffs, scoped results, limitations, and code links pinned to the reviewed commits. Source-code links describe those specific revisions rather than an unverified moving branch.
 
 `public/evidence.html` contains pinned source links, reproduction commands, captured results, and verification limits. `public/evidence/project-runs.json` holds the saved output data. The accompanying wrappers reproduce the documented Windows cleanup and isolated-memory checks.
 
@@ -52,7 +56,7 @@ The active technical portfolio contains **three interactive architecture views**
 - **Search and ranking:** source-grounded reference architecture using the separate EchoFind and Clipopedia implementations, with query planning, candidate generation, fusion, hydration, reranking, and selection.
 - **Durable AI workflows:** a simplified system-design pattern separating request lifetime, persistent job state, workers, artifacts, events, and client reconnection.
 
-Each of the **five public project cases** also has an interactive implementation diagram generated from its source-linked flow and conditional branches. `src/components/ArchitectureExplorer.tsx` lets visitors inspect responsibilities, technologies, failure boundaries, and connections. Selecting a component changes the explanation; it does not invoke that component or execute a provider workflow.
+Each of the **six public project cases** also has an interactive implementation diagram generated from its source-linked flow and conditional branches. `src/components/ArchitectureExplorer.tsx` lets visitors inspect responsibilities, technologies, failure boundaries, and connections. Selecting a component changes the explanation; it does not invoke that component or execute a provider workflow.
 
 The current diagrams do not claim to execute embeddings, model inference, broker operations, media processing, or recovery jobs. They remain distinct from the captured repository outputs on the evidence page.
 

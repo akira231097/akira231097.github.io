@@ -52,6 +52,7 @@ function LinkOut({
 }
 const github = "https://github.com/akira231097/";
 const repos: Record<string, string> = {
+  finishos: "FinishOS",
   echofind: "echofind",
   artha: "artha-council",
   clipopedia: "clipopedia",
@@ -59,6 +60,7 @@ const repos: Record<string, string> = {
   reelforge: "reelforge",
 };
 const domains: Record<string, string> = {
+  finishos: "On-device agents",
   echofind: "Search & ranking",
   artha: "Agent systems",
   clipopedia: "Search & ranking",
@@ -75,6 +77,15 @@ const publicNodeKinds: Record<
   string,
   Record<string, ArchitectureNode["kind"]>
 > = {
+  finishos: {
+    capture: "interface",
+    identify: "control",
+    remember: "storage",
+    pack: "runtime",
+    infer: "runtime",
+    review: "control",
+    handoff: "interface",
+  },
   echofind: {
     route: "runtime",
     analyze: "runtime",
@@ -273,7 +284,11 @@ function CaseDialog({
               ×
             </button>
           </div>
-          <p className="e-eyebrow">INDEPENDENT BUILD / PUBLIC SOURCE</p>
+          <p className="e-eyebrow">
+            {project.id === "finishos"
+              ? "ANDROID IMPLEMENTATION / EDGECHAT MIT FOUNDATION"
+              : "INDEPENDENT BUILD / PUBLIC SOURCE"}
+          </p>
           <h2 id="engineering-case-title">{project.title}</h2>
           <p className="e-case-subtitle">{project.subtitle}</p>
           <p className="e-case-role">{project.role}</p>
@@ -286,6 +301,36 @@ function CaseDialog({
               </div>
             ))}
           </div>
+          {project.id === "finishos" && (
+            <div
+              className="e-finishos-gallery"
+              aria-label="FinishOS phone screenshots"
+            >
+              <figure>
+                <img
+                  src="./assets/finishos-reply-review.png"
+                  alt="FinishOS Android reply screen showing fictional Sam, an editable suggested reply, and Copy reviewed reply"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Reply review on Samsung S26 Ultra. Fictional conversation and
+                  a deterministic test response; real-model tests are recorded
+                  separately.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="./assets/finishos-form-applied.png"
+                  alt="FinishOS practice form with reviewed fictional answers applied while password and card fields stay blank"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Reviewed values applied to a fictional Android form. Password
+                  and payment fields remain empty; nothing was submitted.
+                </figcaption>
+              </figure>
+            </div>
+          )}
           <PublicCaseDiagram project={project} />
           <div className="e-case-section-title">
             <span className="e-mono">01 / IMPLEMENTATION STACK</span>
@@ -335,7 +380,14 @@ function CaseDialog({
                 {link.label}
               </LinkOut>
             ))}
-            <a href={"./evidence.html#" + project.id}>
+            <a
+              href={
+                project.id === "finishos"
+                  ? github +
+                    "FinishOS/tree/3f76a57a80142910dcf7878aac03cba8c49ac701/docs/evidence"
+                  : "./evidence.html#" + project.id
+              }
+            >
               Recorded outputs & test scope
               <Arrow external />
             </a>
@@ -386,6 +438,16 @@ function ProjectCard({
       </div>
       <h3>{project.title}</h3>
       <p className="e-project-subtitle">{project.subtitle}</p>
+      {project.id === "finishos" && (
+        <div className="e-finishos-card-media">
+          <img
+            src="./assets/finishos-reply-review.png"
+            alt="Real FinishOS Android reply review screen with a fictional conversation"
+            loading="lazy"
+          />
+          <span>Recorded on Samsung S26 Ultra · fictional test data</span>
+        </div>
+      )}
       <div
         className="e-project-pipeline"
         aria-label={project.title + " implementation stages"}
@@ -868,14 +930,15 @@ export default function EngineeringPortfolio() {
               </h2>
             </div>
             <p>
-              Five independent builds make the engineering concrete: public
-              source, named mechanisms, design tradeoffs, and scoped
-              verification.
+              Six public implementations make the engineering concrete: source,
+              named mechanisms, design tradeoffs, and scoped verification.
+              FinishOS builds on the MIT-licensed EdgeChat engine.
             </p>
           </div>
           <div className="e-project-filters" aria-label="Filter projects">
             {[
               "All projects",
+              "On-device agents",
               "Search & ranking",
               "Agent systems",
               "State & evidence",

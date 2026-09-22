@@ -36,3 +36,10 @@ Reviewed September 22, 2026. This record covers the technical redesign of the pu
 - Dependency audit reports zero known vulnerabilities. Built output contains no source maps.
 
 Browser checks used Chromium in desktop and emulated responsive viewports, not a physical cross-browser device lab. GitHub Pages deployment is handled by the checked-in workflow; repository history records the published revision. Public-project reproduction instructions and limitations remain in `public/evidence.html`.
+
+## FinishOS addition — September 22, 2026
+
+- Added a sixth public engineering case for [FinishOS](https://github.com/akira231097/FinishOS/tree/3f76a57a80142910dcf7878aac03cba8c49ac701). The Android app derives from EdgeChat under the retained MIT notice; the case does not claim original authorship of the upstream iOS engine.
+- Captured the reply screen and filled practice form from the connected Samsung S26 Ultra. Both show fictional data. The reply screen uses a deterministic test backend; real-model output and timing are documented separately. The protected form review screen blocked capture, so only the practice form after explicit reviewed application appears publicly.
+- Linked six source/verification paths to the pinned FinishOS commit, including the signed-app result and form tests. The case gives its limits alongside recorded counts rather than treating individual latency observations as guarantees.
+- `npm run build` passes after the change. The local desktop browser shows the featured project card, both images and its interactive seven-component diagram. At a 390px viewport, the dialog fits within 374px, the page has no horizontal overflow, and both screenshot assets load. The temporary viewport override was reset.

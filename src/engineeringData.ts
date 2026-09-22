@@ -4,7 +4,7 @@
  * claims about live provider performance or private production systems.
  */
 export type EngineeringCaseId =
-  "echofind" | "artha" | "clipopedia" | "commitment" | "reelforge";
+  "finishos" | "echofind" | "artha" | "clipopedia" | "commitment" | "reelforge";
 
 export type EngineeringSourceLink = {
   label: string;
@@ -61,6 +61,7 @@ export type EngineeringCase = {
 };
 
 const revisions = {
+  FinishOS: "3f76a57a80142910dcf7878aac03cba8c49ac701",
   echofind: "8b5a3ab9ecbc491ca290979eeeb2112c2de8c62f",
   "artha-council": "bc3ef17b4ebc4a56004fc098209caa39919500f5",
   clipopedia: "b2cc9d85c38117f5787dc364446f3d6bd500ce71",
@@ -80,6 +81,241 @@ function source(
 }
 
 export const engineeringCases: EngineeringCase[] = [
+  {
+    id: "finishos",
+    title: "FinishOS",
+    subtitle:
+      "An offline Android assistant for reviewed replies and guided forms.",
+    role: "Android implementation and device verification on a Samsung S26 Ultra. Built on the MIT-licensed EdgeChat inference engine, with original attribution retained.",
+    stack: [
+      {
+        boundary: "Android interface",
+        technologies: [
+          "Kotlin",
+          "Jetpack Compose",
+          "Floating review panel",
+          "Android Autofill",
+        ],
+      },
+      {
+        boundary: "Local inference",
+        technologies: [
+          "llama.cpp",
+          "Qwen3-VL 4B Q4_K_M",
+          "OpenCL",
+          "Q8 KV cache",
+        ],
+      },
+      {
+        boundary: "Memory & control",
+        technologies: [
+          "SQLite",
+          "Source-linked context",
+          "Revision checks",
+          "Explicit Copy",
+        ],
+      },
+      {
+        boundary: "Documents",
+        technologies: [
+          "Android document picker",
+          "PDFBox-Android",
+          "Reviewed export",
+        ],
+      },
+    ],
+    flow: [
+      {
+        id: "capture",
+        title: "Capture",
+        technology: "Share / notification",
+        responsibility:
+          "Accept user-selected text or permitted notification snippets as candidate context.",
+        failureMode:
+          "Notifications provide partial incoming history; unsupported or ambiguous threads require user review.",
+      },
+      {
+        id: "identify",
+        title: "Select person",
+        technology: "Conversation picker",
+        responsibility:
+          "Keep the app, account and person explicit before preparing or copying a reply.",
+        failureMode:
+          "An overlay cannot identify the chat underneath it, so the user verifies the selection.",
+      },
+      {
+        id: "remember",
+        title: "Remember",
+        technology: "SQLite + revision",
+        responsibility:
+          "Preserve approved facts, context, writing preferences and unfinished edits beyond model context.",
+        failureMode:
+          "An old draft is invalidated when the conversation, source or preference changes.",
+      },
+      {
+        id: "pack",
+        title: "Select context",
+        technology: "Bounded retrieval",
+        responsibility:
+          "Bring only relevant recent and older snippets from the selected conversation into the prompt.",
+        failureMode:
+          "Missing messages cannot be recovered from a hidden or muted chat.",
+      },
+      {
+        id: "infer",
+        title: "Draft locally",
+        technology: "Qwen3-VL 4B + llama.cpp",
+        responsibility:
+          "Generate a short suggested reply using the selected context and user-supplied intent.",
+        failureMode:
+          "A small model can omit or invent details; no generated text is automatically sent.",
+      },
+      {
+        id: "review",
+        title: "Review",
+        technology: "Editable reply / form",
+        responsibility:
+          "Let the user check a suggestion or answer before any copy, form application or PDF export.",
+        failureMode:
+          "A stale or unreviewed result cannot pass the relevant action gate.",
+      },
+      {
+        id: "handoff",
+        title: "Complete",
+        technology: "Explicit Copy / Apply / Save",
+        responsibility:
+          "Copy reviewed text, apply reviewed form fields, or save a separate filled PDF.",
+        failureMode:
+          "The user still decides whether and where to send or submit the result.",
+      },
+    ],
+    branches: [
+      {
+        from: "capture",
+        to: "review",
+        label: "form path",
+        behavior:
+          "Supported native, HTML and blank PDF text fields become questions and a final review; a free-form reply draft is not needed for exact contact answers.",
+      },
+      {
+        from: "remember",
+        to: "review",
+        label: "saved work",
+        behavior:
+          "Reopening a current draft returns to saved reviewed text when its source and model revision still match.",
+      },
+    ],
+    decisions: [
+      {
+        title: "Keep approval at the last consequential step",
+        mechanism:
+          "The panel shows an editable suggestion with explicit Copy. Forms require review before applying values or exporting a new PDF copy. No messaging action or form submission is invoked.",
+        tradeoff:
+          "The user still pastes and sends messages and submits forms. This preserves a clear final check and limits autonomous reach.",
+        evidence: [
+          source(
+            "FinishOS",
+            "android/app/src/main/java/com/rishikesh/edgechat/assistant/ReplyOverlayPanel.kt",
+            "Floating review panel",
+          ),
+          source(
+            "FinishOS",
+            "android/app/src/main/java/com/rishikesh/edgechat/assistant/forms/FormApplyGate.kt",
+            "Form application gate",
+          ),
+        ],
+      },
+      {
+        title: "Store durable context outside a short model window",
+        mechanism:
+          "SQLite retains source snippets and explicit writing preferences. Context packing selects a bounded relevant set; revisions invalidate incompatible drafts.",
+        tradeoff:
+          "The assistant can only recall material it received and correctly linked. Broader memory does not make a 4B model infallible.",
+        evidence: [
+          source(
+            "FinishOS",
+            "android/app/src/main/java/com/rishikesh/edgechat/assistant/replies/ReplyStore.kt",
+            "Durable conversation store",
+          ),
+          source(
+            "FinishOS",
+            "android/app/src/main/java/com/rishikesh/edgechat/assistant/replies/ReplyMemory.kt",
+            "Bounded context selection",
+          ),
+        ],
+      },
+      {
+        title: "Measure acceleration on the actual phone",
+        mechanism:
+          "The tested Samsung profile uses local OpenCL, Q8 KV cache and flash attention. A CPU alternative and crash recovery remain available.",
+        tradeoff:
+          "Cold loading and long contexts can be much slower; the 4.470-second short reply is one signed-app observation, not a latency guarantee.",
+        evidence: [
+          source(
+            "FinishOS",
+            "android/app/src/main/java/com/rishikesh/edgechat/assistant/runtime/InferenceSelection.kt",
+            "Device and model gate",
+          ),
+          source(
+            "FinishOS",
+            "docs/evidence/v020-signed-full-app.json",
+            "Signed app run",
+          ),
+        ],
+      },
+    ],
+    results: [
+      {
+        value: "82",
+        label: "JVM tests passed",
+        scope:
+          "Current Android source, zero recorded failures or skips; separate device tests cover UI and runtime behavior.",
+      },
+      {
+        value: "30",
+        label: "Signed form and storage checks",
+        scope:
+          "Native and WebView Autofill, PDF, storage, writing memory and installed permissions on the phone.",
+      },
+      {
+        value: "14",
+        label: "Floating-panel behaviors",
+        scope:
+          "13 in the signed suite and one corrected fixture in a targeted rerun; not one uninterrupted 14-test pass.",
+      },
+    ],
+    sourceLinks: [
+      source("FinishOS", "README.md", "Project overview and real-phone images"),
+      source("FinishOS", "FINISHOS.md", "Implementation and measured limits"),
+      source(
+        "FinishOS",
+        "docs/evidence/v020-signed-full-app.json",
+        "Signed GPU app observation",
+      ),
+      source(
+        "FinishOS",
+        "docs/evidence/v020-signed-forms-and-storage.log",
+        "Form/storage device checks",
+      ),
+      source(
+        "FinishOS",
+        "android/app/src/main/java/com/rishikesh/edgechat/assistant/replies/ReplyCoordinator.kt",
+        "Event-driven reply preparation",
+      ),
+      source(
+        "FinishOS",
+        "android/app/src/main/java/com/rishikesh/edgechat/assistant/forms/FormPdfSupport.kt",
+        "Reviewed PDF copy",
+      ),
+    ],
+    limitations: [
+      "The images show the real Android UI with fictional test data. The reply image uses a deterministic test backend; real-model behavior was measured separately.",
+      "The overlay cannot read the underlying chat. Notification capture is partial; person and account selection require review.",
+      "Replies are never inserted or sent automatically. Forms still require user submission.",
+      "Only supported form fields and blank editable PDFs are handled. Arbitrary scans, sites and language scripts are not certified.",
+      "The signed GPU run measured 4.470 seconds for one fresh reply; long-term battery life and broad phone compatibility remain unverified.",
+    ],
+  },
   {
     id: "echofind",
     title: "EchoFind",
