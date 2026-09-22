@@ -1,6 +1,6 @@
 # Sarath Gentela's portfolio
 
-A static React, TypeScript, and Vite portfolio with production case studies, five independent projects, interactive engineering explainers, and a separate evidence page.
+A static React, TypeScript, and Vite portfolio focused on agent harnesses, multi-stage search and ranking, and asynchronous AI infrastructure. It includes production implementation summaries, interactive architecture diagrams, five source-linked engineering cases, and a separate evidence page with saved local runs.
 
 Public website: **[akira231097.github.io](https://akira231097.github.io/)**.
 
@@ -26,20 +26,25 @@ Open [http://127.0.0.1:4174](http://127.0.0.1:4174). Use an HTTP server rather t
 
 ## Edit the site
 
-| File | What to change |
-| --- | --- |
-| `src/App.tsx` | Main page, navigation, experience, education, contact details, project-card visuals |
-| `src/projects.ts` | Case-study descriptions, workflow steps, technology tags, evidence links |
-| `src/components/SystemsLab.tsx` | Interactive action, retrieval, and recovery explainers |
-| `src/styles.css`, `src/readability.css` | Main visual design and responsive styles |
-| `src/components/SystemsLab.css` | Interactive explainer styles |
-| `public/evidence.html` | Public-project run record and saved-output replay page |
-| `public/evidence/` | Saved synthetic outputs, verification notes, and reproducibility wrappers |
-| `public/assets/` | Product screenshots and portrait |
-| `public/sarath-ai-ml-engineer-resume.pdf` | Supplied résumé, linked from the page |
-| `index.html` | Page metadata |
+| File                                      | What to change                                                                                     |
+| ----------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `src/main.tsx`                            | Application entry point; mounts `EngineeringPortfolio`                                             |
+| `src/EngineeringPortfolio.tsx`            | Main page, navigation, production/project presentation, experience, contact, and case-study dialog |
+| `src/productionData.ts`                   | Lucidream and AskSpice implementation areas, outcomes, stacks, and attribution                     |
+| `src/architectureData.ts`                 | Agent-harness, search/ranking, and asynchronous-workflow diagrams                                  |
+| `src/engineeringData.ts`                  | Independent project architectures, mechanisms, tradeoffs, results, and source links                |
+| `src/components/ArchitectureExplorer.tsx` | Interactive diagram rendering and component details                                                |
+| `src/engineering.css`                     | Dark technical visual design and responsive layouts                                                |
+| `src/components/ArchitectureExplorer.css` | Architecture-diagram styling                                                                       |
+| `public/evidence.html`                    | Public-project run record and saved-output replay page                                             |
+| `public/evidence/`                        | Saved synthetic outputs, verification notes, and reproducibility wrappers                          |
+| `public/assets/`                          | Product screenshots and portrait                                                                   |
+| `public/sarath-ai-ml-engineer-resume.pdf` | Supplied résumé, linked from the page                                                              |
+| `index.html`                              | Page metadata                                                                                      |
 
 Contact details and professional links are based on the supplied résumé and the public LinkedIn profile. See [CONTENT_SOURCES.md](CONTENT_SOURCES.md) for provenance and content boundaries.
+
+Production scale in the main page is explicitly attributed to the résumé. The evidence page contains separately scoped, reproduced public-project checks. Keep those categories distinct when updating content.
 
 Run `npm run build` after changes. Files in `public/` are copied into the build, so keep that folder limited to material intended for visitors.
 

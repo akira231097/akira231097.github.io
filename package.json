@@ -15,7 +15,6 @@
   "devDependencies": {
     "@fontsource-variable/manrope": "^5.2.5",
     "@fontsource/dm-mono": "^5.2.6",
-    "@fontsource/instrument-serif": "^5.2.5",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "@vitejs/plugin-react": "^4.4.1",

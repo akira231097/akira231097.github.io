@@ -1,36 +1,38 @@
-# Portfolio review record
+# Technical portfolio review
 
-Completed September 22, 2026.
+Reviewed September 22, 2026. This record covers the technical redesign of the public portfolio.
 
-## Content review
+## Content and source review
 
-- Compared career, education, and contribution descriptions with the supplied résumé and shareable career context.
-- Reviewed the reference portfolio, Lucidream's public product experience, and Sarath's LinkedIn profile and engineering walkthrough.
-- Verified Lucidream contribution summaries against authorized source history; no company source or private architecture is distributed with the website.
-- Inspected the five public project repositories and pinned evidence links to the reviewed revisions.
-- Independently reviewed attribution and claims. Corrected the commitment illustration to match the actual bundled fixture and described ReelForge checks as transcript parsing rather than speech-to-text inference.
-- Kept synthetic replays and explanatory simulations visibly labeled.
+- Reviewed the supplied résumé, career reference, public LinkedIn profile and engineering walkthrough, Lucidream product page, and authorized repository history.
+- Independently audited attribution: production contributions are specific implementation areas within team-built products; five public projects remain separate implementations.
+- Focused positioning on agent harnesses, search, complex ranking, retrieval, and asynchronous infrastructure. No recommendation-system expertise is claimed.
+- Kept the four production-scale figures attributed to the résumé. Public-project measurements retain their own test conditions, dataset size, and limitations.
+- Verified 51 pinned public source paths against five reviewed repository revisions. Kept company code, private repository identifiers, credentials, and internal diagrams out of the site and source handoff.
+- Corrected conditional paths, tool-result recording, and observation feedback in the diagrams. Classified boundaries by implementation responsibility rather than keyword inference.
+- Preserved the recorded evidence dataset and execution scripts; this redesign did not rerun or change the original project measurements.
 
-## Interaction and accessibility review
+## Architecture and interaction review
 
-- Opened all seven case studies, checked their evidence links, and exercised workflow-step selection.
-- Verified project filtering and restoration of all five independent projects.
-- Checked native modal focus containment, Escape closing, and browser Forward restoring a case study.
-- Checked the mobile menu's initial focus, Escape closing, and closing after navigation.
-- Exercised both approve and decline paths in the action exhibit. Focus stays on the continuing action control.
-- Exercised supported-query and insufficient-evidence paths in the retrieval exhibit.
-- Interrupted a job after a completed checkpoint, reconnected, and verified all four steps completed with focus retained on the restart control.
-- Verified the email-copy confirmation; résumé and other local assets return HTTP 200 with appropriate content types.
-- Checked reduced-motion emulation: orbit animation becomes `none`, and smooth scrolling becomes `auto`.
-- Reviewed computed text contrast and increased explanatory text sizes and contrast.
+- Three main architecture views and five public case diagrams: 72 routed connections checked for valid endpoints, node intersections, orthogonal segments, and canvas bounds; no failures found.
+- Inspected desktop diagrams and mobile component views. Selected components expose responsibilities and inbound/outbound connections.
+- Opened all five project cases; verified their headings, component counts, source links, and Escape closing.
+- Verified closing returns focus to the initiating project button. Browser Back closes a case, Forward restores it, and reloading a case URL restores the case.
+- Filtered to the two search/ranking projects and restored all five projects.
+- Checked mobile navigation opening, initial focus, Escape dismissal, and dismissal after navigation.
+- Verified the email-copy success state, résumé link, and local evidence/assets.
+- Checked the recorded retrieval miss and the ambiguous broker-submission scenario; the latter shows UNKNOWN and rejection of a repeated submission.
 
-## Visual and build review
+## Responsive and build review
 
-- Reviewed desktop layouts at 1440 pixels, mobile layouts at 390 pixels, and the narrow system diagrams at 320 pixels.
-- Confirmed the main page has no horizontal overflow at the reviewed widths and that all displayed images load.
-- Inspected the real product screenshot, every project-card illustration, the mobile case study, systems exhibit, and recorded evidence page.
-- Tested the evidence page's observed retrieval miss and the fake-broker BLOCKED and UNKNOWN scenarios.
-- Production TypeScript and Vite build passes. The final production browser reports no warning or error logs.
-- `npm install` reported zero known package vulnerabilities at build time.
+- Reviewed desktop at 1440px, tablet at 768px, and phones at 390px and 320px. Document width matches the viewport at all checked sizes; the 320px case dialog also has no horizontal overflow.
+- Architecture tabs and project filters scroll within their own rows on narrow screens. Diagram cards preserve explicit connections on mobile.
+- All displayed images load. Retained the real public Lucidream editor preview with a clear product-context caption.
+- Reduced-motion emulation changes smooth scrolling to auto; temporary browser emulation was reset after review.
+- Updated favicon, social artwork, metadata, evidence-page styling, and documentation to match the technical design.
+- TypeScript and Vite production build pass. Final local production-browser review reports no warning/error logs.
+- HTTP 200 checks passed for compiled JS/CSS, favicon, résumé PDF, evidence page and JSON, social image, and product image. Content types match.
+- Résumé bytes retain SHA-256 `9806d265c48251d14619280b4db752d13ea2e18b9e913ed30b7c103f3ea58458`.
+- Dependency audit reports zero known vulnerabilities. Built output contains no source maps.
 
-Public project test scope and reproduction notes are documented in `public/evidence.html`. The initial review used the static local build. Browser checks used Chromium, not a cross-browser device lab. GitHub Pages publishing is configured separately through `.github/workflows/pages.yml`.
+Browser checks used Chromium in desktop and emulated responsive viewports, not a physical cross-browser device lab. GitHub Pages deployment is handled by the checked-in workflow; repository history records the published revision. Public-project reproduction instructions and limitations remain in `public/evidence.html`.

@@ -7,7 +7,7 @@
       name="description"
       content="Source-pinned, reproducible verification of Sarath Gentela’s public AI engineering projects. Inspect actual offline outputs, tests, and limitations."
     />
-    <meta name="theme-color" content="#213e32" />
+    <meta name="theme-color" content="#0b1119" />
     <title>Engineering evidence · Sarath Gentela</title>
     <link rel="icon" href="./favicon.svg" />
     <style>
@@ -701,6 +701,235 @@
           scroll-behavior: auto;
         }
       }
+      /* Shared visual language with the technical portfolio. */
+      :root {
+        color-scheme: dark;
+        --paper: #0b1119;
+        --ink: #e6edf4;
+        --muted: #a1b2c3;
+        --lime: #70d8e6;
+        --line: #2b4052;
+        --white: #101a26;
+        --orange: #edbe85;
+        --orange-bg: #302616;
+        --radius: 8px;
+      }
+      body {
+        font-family: "Manrope Variable", Manrope, Arial, sans-serif;
+      }
+      ::selection {
+        color: #fff;
+        background: #28566c;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      summary:focus-visible {
+        outline-color: var(--lime);
+      }
+      header {
+        background: rgba(11, 17, 25, 0.97);
+        backdrop-filter: blur(14px);
+      }
+      .nav {
+        padding-top: 22px;
+        padding-bottom: 22px;
+      }
+      .brand {
+        font-size: 14px;
+        font-weight: 650;
+      }
+      .mark {
+        border: 1px solid #33535e;
+        border-radius: 6px;
+        background: #12212b;
+        font-family: ui-monospace, Consolas, monospace;
+        font-weight: 600;
+      }
+      .nav > a:last-child,
+      .sources a,
+      .foot a {
+        color: var(--lime);
+      }
+      .hero h1 {
+        font-size: clamp(40px, 6vw, 66px);
+        font-weight: 550;
+        line-height: 1.12;
+        letter-spacing: -2.4px;
+      }
+      .hero h1 span {
+        font-family: inherit;
+        font-style: normal;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        color: var(--lime);
+      }
+      .hero p {
+        max-width: 730px;
+        font-size: 16px;
+        line-height: 1.85;
+      }
+      .kicker {
+        color: #80c6d6;
+        font-weight: 400;
+      }
+      .btn {
+        border: 1px solid var(--lime);
+        border-radius: 5px;
+        background: var(--lime);
+        color: #0c2029;
+      }
+      .btn:hover {
+        background: #a0e9f0;
+      }
+      .stat {
+        border-radius: 7px;
+        background: linear-gradient(140deg, #142131, #101a26);
+      }
+      .stat b {
+        color: #c5e5ef;
+        font-weight: 550;
+        font-size: 31px;
+      }
+      .toc a {
+        border-radius: 5px;
+        background: #101a26;
+      }
+      .toc a:hover {
+        color: #0c2029;
+      }
+      .section-head h2 {
+        font-weight: 550;
+        letter-spacing: -1px;
+      }
+      .badge {
+        background: #1b3027;
+        border-color: #3c6250;
+        color: #c3eaa9;
+        border-radius: 5px;
+        font-weight: 600;
+      }
+      .badge.warn {
+        border-color: #665134;
+        color: #edbe85;
+      }
+      .metrics div b {
+        color: #b7dce8;
+        font-weight: 550;
+      }
+      .scope {
+        background: #12242b;
+        border-left-color: #4f9ca7;
+        color: #b9cbd7;
+        line-height: 1.85;
+      }
+      .scope strong {
+        color: #d0e8ee;
+      }
+      .replay-bar {
+        color: #a9c5d3;
+        background: #142333;
+      }
+      .dot {
+        background: #c3f086;
+      }
+      .options button {
+        color: #bccedb;
+        border-color: #344f61;
+        background: #152331;
+        border-radius: 5px;
+      }
+      .options button:hover {
+        border-color: #70a9bc;
+      }
+      .options button[aria-pressed="true"] {
+        background: #203f4b;
+        color: #a2edf2;
+        border-color: #5aaab7;
+      }
+      .quote {
+        font-family: inherit;
+        font-size: 18px;
+        line-height: 1.85;
+        padding-left: 18px;
+        border-left: 2px solid #4c788b;
+        color: #cbdce8;
+      }
+      .result-note.miss,
+      .proof-item.missing {
+        color: #edbe85;
+      }
+      .sources a:hover,
+      .foot a:hover {
+        color: #bceff5;
+      }
+      summary {
+        color: #b9d6e2;
+      }
+      pre {
+        background: #0d1722;
+        border: 1px solid #2c4255;
+        border-radius: 5px;
+        color: #b7d5e3;
+        font-size: 12px;
+      }
+      .ledger-card,
+      .memory-step {
+        border-radius: 7px;
+      }
+      .ledger-card blockquote {
+        border-left-color: #5c8b99;
+        color: #c8d9e4;
+      }
+      .state {
+        color: #c3eaa9;
+      }
+      .state[data-state="BLOCKED"] {
+        color: #f39b80;
+      }
+      .state[data-state="UNKNOWN"] {
+        color: #edc777;
+      }
+      .proof-item {
+        background: #19302d;
+        color: #c0d7cd;
+      }
+      .memory-step,
+      .word {
+        background: #101a26;
+      }
+      .memory-step:last-child {
+        background: #132831;
+        border-color: #3a6879;
+      }
+      .word {
+        border-radius: 4px;
+        color: #c4dce8;
+      }
+      .word small {
+        color: #8fb3c5;
+      }
+      @media (max-width: 720px) {
+        .hero h1 {
+          font-size: clamp(34px, 8.5vw, 48px);
+          letter-spacing: -1.35px;
+        }
+        .hero p {
+          font-size: 14px;
+        }
+        .nav {
+          padding: 19px 20px;
+        }
+        .nav > a:last-child {
+          font-size: 11px;
+        }
+        .quote {
+          font-size: 16px;
+          padding-left: 13px;
+        }
+        .stat b {
+          font-size: 28px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -714,13 +943,13 @@
     <main class="wrap">
       <div class="hero">
         <div class="kicker">
-          Engineering evidence / captured 22 September 2026
+          TECHNICAL VALIDATION / CAPTURED 22 SEPTEMBER 2026
         </div>
-        <h1>Look under<br /><span>the interface.</span></h1>
+        <h1>Source to result.<br /><span>Inspect the evidence.</span></h1>
         <p>
-          Real repository runs, inspectable outputs, and the boundaries around
-          each result. Every source link points to the revision that was
-          checked.
+          Public implementations, exercised locally. Inspect ranked retrieval
+          candidates, execution-gate outcomes, state transitions, and the exact
+          revisions behind the checks.
         </p>
         <div class="hero-meta">
           <a class="btn" href="./evidence/project-runs.json" download
