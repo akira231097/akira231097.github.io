@@ -38,13 +38,15 @@ Open [http://127.0.0.1:4174](http://127.0.0.1:4174). Use an HTTP server rather t
 | `src/components/ArchitectureExplorer.css` | Architecture-diagram styling                                                                       |
 | `public/evidence.html`                    | Public-project run record and saved-output replay page                                             |
 | `public/evidence/`                        | Saved synthetic outputs, verification notes, and reproducibility wrappers                          |
-| `public/assets/`                          | Product screenshots, including fictional FinishOS phone captures, and portrait                     |
+| `public/assets/`                          | Silent product videos and posters, fictional FinishOS phone captures, and portrait                  |
 | `public/sarath-ai-ml-engineer-resume.pdf` | Supplied résumé, linked from the page                                                              |
 | `index.html`                              | Page metadata                                                                                      |
 
 Contact details and professional links are based on the supplied résumé and the public LinkedIn profile. See [CONTENT_SOURCES.md](CONTENT_SOURCES.md) for provenance and content boundaries.
 
 Production scale in the main page is explicitly attributed to the résumé. The evidence page contains separately scoped, reproduced public-project checks. Keep those categories distinct when updating content.
+
+The two production videos are supplied product footage. Their published MP4 files contain video only; the source audio tracks were removed. Playback starts when a video is visible, pauses offscreen, and respects reduced-motion preference. Native controls allow manual playback.
 
 Run `npm run build` after changes. Files in `public/` are copied into the build, so keep that folder limited to material intended for visitors.
 

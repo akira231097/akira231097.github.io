@@ -194,6 +194,75 @@ function ScopeMap() {
   );
 }
 
+function ProductVideo({ id, name }: { id: string; name: string }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let visible = false;
+    const updatePlayback = () => {
+      if (!visible || reducedMotion.matches) {
+        video.pause();
+        return;
+      }
+      void video.play().catch(() => {
+        // Native controls remain available if a browser blocks autoplay.
+      });
+    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        updatePlayback();
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(video);
+    reducedMotion.addEventListener("change", updatePlayback);
+    return () => {
+      observer.disconnect();
+      reducedMotion.removeEventListener("change", updatePlayback);
+      video.pause();
+    };
+  }, []);
+
+  return (
+    <figure className="e-product-video">
+      <div className="e-product-video-frame">
+        <video
+          ref={videoRef}
+          src={`./assets/${id}-product-silent.mp4`}
+          poster={`./assets/${id}-product-poster.jpg`}
+          width="1440"
+          height="1080"
+          muted
+          loop
+          playsInline
+          controls
+          preload="metadata"
+          aria-label={`${name} product walkthrough, silent video`}
+        >
+          <a href={`./assets/${id}-product-silent.mp4`}>
+            Open the silent video
+          </a>
+        </video>
+      </div>
+      <figcaption>
+        <span className="e-mono">PRODUCT WALKTHROUGH / SILENT</span>
+        <h5>{name} in motion.</h5>
+        <p>
+          Product footage supplied by Sarath. This is a team-built interface;
+          the engineering contributions and system boundaries are described
+          above.
+        </p>
+        <span className="e-mono">NO AUDIO TRACK · LOOPS WHEN VISIBLE</span>
+      </figcaption>
+    </figure>
+  );
+}
+
 function PublicCaseDiagram({ project }: { project: EngineeringCase }) {
   const slots = [
     [0, 0],
@@ -774,29 +843,6 @@ export default function EngineeringPortfolio() {
                     </LinkOut>
                   ))}
                 </div>
-                {system.id === "lucidream" && (
-                  <figure className="e-product-proof">
-                    <a
-                      href="https://lucidream.io/"
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="See the Lucidream product"
-                    >
-                      <img
-                        src="./assets/lucidream-public-editor.jpg"
-                        width="1060"
-                        height="431"
-                        loading="lazy"
-                        alt="Lucidream's public editor preview, showing the media canvas, transcript and editing controls"
-                      />
-                    </a>
-                    <figcaption>
-                      Product context · Lucidream’s public editor preview.
-                      Team-built product; my contributions are detailed
-                      alongside.
-                    </figcaption>
-                  </figure>
-                )}
               </div>
               <div className="e-production-modules">
                 <span className="e-mono e-block-label">
@@ -841,6 +887,7 @@ export default function EngineeringPortfolio() {
                 </table>
                 <p className="e-ownership">{system.ownership}</p>
               </div>
+              <ProductVideo id={system.id} name={system.name} />
             </article>
           ))}
           <article className="e-ingestion">

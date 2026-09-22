@@ -24,8 +24,7 @@ Private repository review informed the contribution audit. The public site and h
 - `public/assets/finishos-reply-review.png` and `public/assets/finishos-form-applied.png` were captured directly from the connected Samsung SM-S948U using the FinishOS Android test build. Both use fictional people and form answers. The reply screen uses a deterministic backend to display a repeatable draft; it is a real UI capture, not a real-model quality example. The form screenshot shows the fictional Android practice form after explicit reviewed application. Its password/payment fields remain blank and nothing was submitted. The private form review activity blocks screenshots, and no attempt was made to bypass that control.
 
 - `public/assets/sarath-profile.jpg`, used in the technical portfolio, is Sarath's portrait from his public LinkedIn profile.
-- `public/assets/lucidream-public-editor.jpg` is a retained capture of the editor feature on Lucidream's public landing page. It shows the product's **public marketing presentation**, not a recorded authenticated editing session.
-- `public/assets/lucidream-social-planner.png` is retained public product imagery. It does not establish individual authorship of the pictured feature.
+- `public/assets/lucidream-product-silent.mp4` and `public/assets/askspice-product-silent.mp4` are derived from two product walkthrough videos supplied by Sarath for this portfolio. Their audio tracks were removed before publication; each published file has one H.264 video stream and no audio stream. The matching poster images are frames extracted from those clips. The footage shows team-built product interfaces and does not by itself establish individual authorship of a pictured feature or verify the full architecture described on the page.
 - Social preview artwork and the interactive diagrams were authored for this portfolio. They are presentation assets, not screenshots of private systems.
 
 ## Independent project evidence
