@@ -46,8 +46,7 @@ Browser checks used Chromium in desktop and emulated responsive viewports, not a
 
 ## Product video update
 
-- Reviewed the two supplied product clips and placed them under Lucidream and AskSpice, respectively, in place of the Lucidream image.
-- Removed both audio streams with FFmpeg while copying the original H.264 video streams. FFprobe confirms that each published MP4 contains one video stream and no audio stream.
-- Added still frames as poster images and native playback controls. Both clips loop while visible; playback pauses offscreen and when reduced motion is requested.
-- The captions identify the footage as team-built product walkthroughs and keep the engineering contribution claims separate from what the videos depict.
-- Reviewed both clips in the browser at desktop width and the Lucidream clip at 390px phone width. The visible video played, the offscreen video paused, both were muted, and the phone page had no horizontal overflow.
+- Placed the new 36-second link-to-short walkthrough under Lucidream. Both earlier podcast question-and-answer clips now appear as selectable AskSpice examples. The page captions state their use cases and observed flow concisely.
+- Removed source audio while copying each H.264 video stream. FFprobe confirms that all three published MP4s contain one video stream and no audio stream.
+- Built a themed player with poster frames, a silent indicator, clip selection, play/pause, keyboard-accessible seeking, elapsed time, and an expanded view that closes with Escape. The selected video loops while visible, pauses offscreen, and respects reduced motion.
+- Reviewed desktop and 390px phone layouts. Verified clip switching, pause/resume, seeking, expanded controls, and no horizontal page overflow. The original six project cases and FinishOS phone screenshots remain intact.

@@ -32,13 +32,13 @@ Open [http://127.0.0.1:4174](http://127.0.0.1:4174). Use an HTTP server rather t
 | `src/EngineeringPortfolio.tsx`            | Main page, navigation, production/project presentation, experience, contact, and case-study dialog |
 | `src/productionData.ts`                   | Lucidream and AskSpice implementation areas, outcomes, stacks, and attribution                     |
 | `src/architectureData.ts`                 | Agent-harness, search/ranking, and asynchronous-workflow diagrams                                  |
-| `src/engineeringData.ts`                  | Public project architectures, mechanisms, tradeoffs, results, and source links                      |
+| `src/engineeringData.ts`                  | Public project architectures, mechanisms, tradeoffs, results, and source links                     |
 | `src/components/ArchitectureExplorer.tsx` | Interactive diagram rendering and component details                                                |
 | `src/engineering.css`                     | Dark technical visual design and responsive layouts                                                |
 | `src/components/ArchitectureExplorer.css` | Architecture-diagram styling                                                                       |
 | `public/evidence.html`                    | Public-project run record and saved-output replay page                                             |
 | `public/evidence/`                        | Saved synthetic outputs, verification notes, and reproducibility wrappers                          |
-| `public/assets/`                          | Silent product videos and posters, fictional FinishOS phone captures, and portrait                  |
+| `public/assets/`                          | Silent product videos and posters, fictional FinishOS phone captures, and portrait                 |
 | `public/sarath-ai-ml-engineer-resume.pdf` | Supplied résumé, linked from the page                                                              |
 | `index.html`                              | Page metadata                                                                                      |
 
@@ -46,7 +46,7 @@ Contact details and professional links are based on the supplied résumé and th
 
 Production scale in the main page is explicitly attributed to the résumé. The evidence page contains separately scoped, reproduced public-project checks. Keep those categories distinct when updating content.
 
-The two production videos are supplied product footage. Their published MP4 files contain video only; the source audio tracks were removed. Playback starts when a video is visible, pauses offscreen, and respects reduced-motion preference. Native controls allow manual playback.
+The Lucidream walkthrough and two AskSpice examples contain video only; source audio tracks were removed. The custom player starts the selected video when visible, pauses offscreen, and respects reduced-motion preference. Visitors can switch examples, play/pause, seek, and expand the video.
 
 Run `npm run build` after changes. Files in `public/` are copied into the build, so keep that folder limited to material intended for visitors.
 

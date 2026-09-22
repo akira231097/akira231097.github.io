@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import ArchitectureExplorer from "./components/ArchitectureExplorer";
 import type {
   ArchitectureDiagram,
@@ -194,23 +194,105 @@ function ScopeMap() {
   );
 }
 
+type WalkthroughClip = {
+  title: string;
+  context: string;
+  src: string;
+  poster: string;
+  seconds: number;
+  width: number;
+  height: number;
+};
+
+const walkthroughs: Record<
+  string,
+  {
+    eyebrow: string;
+    heading: string;
+    description: string;
+    steps: string[];
+    clips: WalkthroughClip[];
+  }
+> = {
+  lucidream: {
+    eyebrow: "CREATOR WORKFLOW",
+    heading: "From long video to ready-to-review moments.",
+    description:
+      "Paste a video link, refine clips by prompt, then review branded shorts and social drafts.",
+    steps: ["Source link", "Prompted edit", "Review outputs"],
+    clips: [
+      {
+        title: "Creator workflow",
+        context: "Source video → short clips → social drafts",
+        src: "./assets/lucidream-product-silent.mp4",
+        poster: "./assets/lucidream-product-poster.jpg",
+        seconds: 36.1,
+        width: 1138,
+        height: 640,
+      },
+    ],
+  },
+  askspice: {
+    eyebrow: "CONVERSATIONAL SEARCH",
+    heading: "Find the moment behind an answer.",
+    description:
+      "Ask a podcast question. AskSpice retrieves transcript context, answers, and opens the playable source moment.",
+    steps: ["Question", "Ranked passage", "Source clip"],
+    clips: [
+      {
+        title: "Ask an episode",
+        context: "Follow a podcast question into its source clip.",
+        src: "./assets/askspice-podcast-silent.mp4",
+        poster: "./assets/askspice-podcast-poster.jpg",
+        seconds: 46.73,
+        width: 1440,
+        height: 1080,
+      },
+      {
+        title: "Research a topic",
+        context: "Find a technical answer in a long episode.",
+        src: "./assets/askspice-research-silent.mp4",
+        poster: "./assets/askspice-research-poster.jpg",
+        seconds: 45.25,
+        width: 1440,
+        height: 1080,
+      },
+    ],
+  },
+};
+
+function videoTime(seconds: number) {
+  if (!Number.isFinite(seconds)) return "0:00";
+  const whole = Math.floor(seconds);
+  return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`;
+}
+
 function ProductVideo({ id, name }: { id: string; name: string }) {
+  const config = walkthroughs[id];
+  const [selected, setSelected] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [expanded, setExpanded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const userPaused = useRef(false);
+  const clip = config.clips[selected];
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let visible = false;
+    userPaused.current = false;
+    setPlaying(false);
+    setElapsed(0);
+    setDuration(0);
     const updatePlayback = () => {
-      if (!visible || reducedMotion.matches) {
+      if (!visible || reducedMotion.matches || userPaused.current) {
         video.pause();
         return;
       }
-      void video.play().catch(() => {
-        // Native controls remain available if a browser blocks autoplay.
-      });
+      void video.play().catch(() => setPlaying(false));
     };
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -226,38 +308,197 @@ function ProductVideo({ id, name }: { id: string; name: string }) {
       reducedMotion.removeEventListener("change", updatePlayback);
       video.pause();
     };
-  }, []);
+  }, [id, selected]);
 
+  useEffect(() => {
+    if (!expanded) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const dismiss = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setExpanded(false);
+    };
+    window.addEventListener("keydown", dismiss);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", dismiss);
+    };
+  }, [expanded]);
+
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (video.paused) {
+      userPaused.current = false;
+      void video.play().catch(() => setPlaying(false));
+    } else {
+      userPaused.current = true;
+      video.pause();
+    }
+  };
+
+  const seek = (seconds: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.currentTime = seconds;
+    setElapsed(seconds);
+  };
+
+  const length = duration || clip.seconds;
+  const progress = Math.min(100, (elapsed / length) * 100);
   return (
-    <figure className="e-product-video">
-      <div className="e-product-video-frame">
-        <video
-          ref={videoRef}
-          src={`./assets/${id}-product-silent.mp4`}
-          poster={`./assets/${id}-product-poster.jpg`}
-          width="1440"
-          height="1080"
-          muted
-          loop
-          playsInline
-          controls
-          preload="metadata"
-          aria-label={`${name} product walkthrough, silent video`}
-        >
-          <a href={`./assets/${id}-product-silent.mp4`}>
-            Open the silent video
-          </a>
-        </video>
+    <figure className="e-product-video" data-system={id}>
+      <div className={expanded ? "e-film-frame is-expanded" : "e-film-frame"}>
+        <div className="e-film-topline">
+          <span className="e-mono">PRODUCT / {name.toUpperCase()}</span>
+          <span className="e-film-indicator">
+            <i /> SILENT
+          </span>
+        </div>
+        <div className="e-film-screen">
+          <video
+            key={clip.src}
+            ref={videoRef}
+            src={clip.src}
+            poster={clip.poster}
+            width={clip.width}
+            height={clip.height}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onPlay={() => setPlaying(true)}
+            onPause={() => setPlaying(false)}
+            onTimeUpdate={(event) =>
+              setElapsed(event.currentTarget.currentTime)
+            }
+            onLoadedMetadata={(event) =>
+              setDuration(event.currentTarget.duration)
+            }
+            onClick={togglePlayback}
+            aria-label={`${name}: ${clip.title}, silent product walkthrough`}
+          >
+            <a href={clip.src}>Open silent video</a>
+          </video>
+          {!playing && (
+            <button
+              type="button"
+              className="e-film-big-play"
+              onClick={togglePlayback}
+              aria-label={`Play ${name}: ${clip.title}`}
+            >
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="m8 5 11 7-11 7z" />
+              </svg>
+            </button>
+          )}
+        </div>
+        <div className="e-film-controls">
+          <button
+            type="button"
+            onClick={togglePlayback}
+            aria-label={`${playing ? "Pause" : "Play"} ${name} video`}
+          >
+            {playing ? (
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <rect x="6" y="5" width="4" height="14" rx="1" />
+                <rect x="14" y="5" width="4" height="14" rx="1" />
+              </svg>
+            ) : (
+              <svg
+                width="17"
+                height="17"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="m8 5 11 7-11 7z" />
+              </svg>
+            )}
+          </button>
+          <input
+            type="range"
+            min="0"
+            max={length}
+            step="0.1"
+            value={Math.min(elapsed, length)}
+            onChange={(event) => seek(Number(event.target.value))}
+            style={{ "--seek-progress": `${progress}%` } as CSSProperties}
+            aria-label={`Seek ${name} video`}
+          />
+          <span className="e-film-time">
+            {videoTime(elapsed)} <span>/</span> {videoTime(length)}
+          </span>
+          <button
+            type="button"
+            onClick={() => setExpanded((current) => !current)}
+            aria-label={`${expanded ? "Close expanded" : "Expand"} ${name} video`}
+          >
+            <svg
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4" />
+            </svg>
+          </button>
+        </div>
       </div>
-      <figcaption>
-        <span className="e-mono">PRODUCT WALKTHROUGH / SILENT</span>
-        <h5>{name} in motion.</h5>
-        <p>
-          Product footage supplied by Sarath. This is a team-built interface;
-          the engineering contributions and system boundaries are described
-          above.
-        </p>
-        <span className="e-mono">NO AUDIO TRACK · LOOPS WHEN VISIBLE</span>
+      <figcaption className="e-film-story">
+        <span className="e-mono">
+          {config.eyebrow} / 0{selected + 1}
+        </span>
+        <h5>{config.heading}</h5>
+        <p>{config.description}</p>
+        <div className="e-film-flow" aria-label={`${name} workflow`}>
+          {config.steps.map((step, index) => (
+            <span key={step}>
+              {index > 0 && <i aria-hidden="true">→</i>}
+              {step}
+            </span>
+          ))}
+        </div>
+        {config.clips.length > 1 && (
+          <div
+            className="e-film-scenes"
+            role="group"
+            aria-label="Choose AskSpice example"
+          >
+            {config.clips.map((option, index) => (
+              <button
+                type="button"
+                key={option.src}
+                className={selected === index ? "is-selected" : ""}
+                aria-pressed={selected === index}
+                onClick={() => setSelected(index)}
+              >
+                <img src={option.poster} alt="" loading="lazy" />
+                <span>
+                  <small>0{index + 1} / VIDEO</small>
+                  <strong>{option.title}</strong>
+                  <small>{option.context}</small>
+                </span>
+                <Arrow />
+              </button>
+            ))}
+          </div>
+        )}
       </figcaption>
     </figure>
   );
