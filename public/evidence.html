@@ -1,0 +1,1909 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Source-pinned, reproducible verification of Sarath Gentela’s public AI engineering projects. Inspect actual offline outputs, tests, and limitations."
+    />
+    <meta name="theme-color" content="#213e32" />
+    <title>Engineering evidence · Sarath Gentela</title>
+    <link rel="icon" href="./favicon.svg" />
+    <style>
+      :root {
+        --paper: #f7f8f2;
+        --ink: #213e32;
+        --muted: #626e63;
+        --lime: #d7f78b;
+        --line: #d9ded2;
+        --white: #fff;
+        --orange: #a75222;
+        --orange-bg: #fff1df;
+        --radius: 22px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 85px;
+      }
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--paper);
+        font:
+          16px/1.65 Manrope,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 4px;
+      }
+      button {
+        font: inherit;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      summary:focus-visible {
+        outline: 3px solid #526d29;
+        outline-offset: 5px;
+      }
+      header {
+        position: sticky;
+        z-index: 4;
+        top: 0;
+        border-bottom: 1px solid var(--line);
+        background: rgba(247, 248, 242, 0.97);
+      }
+      .nav {
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 18px 34px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+      }
+      .mark {
+        display: grid;
+        place-items: center;
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+        background: var(--ink);
+        color: var(--lime);
+        font-size: 12px;
+      }
+      .nav > a:last-child {
+        font-size: 13px;
+        font-weight: 650;
+      }
+      .wrap {
+        max-width: 1132px;
+        margin: auto;
+        padding: 0 34px;
+      }
+      .hero {
+        padding: 72px 0 46px;
+        max-width: 910px;
+      }
+      .kicker {
+        font:
+          600 11px/1.4 ui-monospace,
+          Consolas,
+          monospace;
+        letter-spacing: 1.7px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .hero h1 {
+        font-size: clamp(43px, 7vw, 78px);
+        line-height: 1.04;
+        letter-spacing: -4px;
+        margin: 22px 0;
+      }
+      .hero h1 span {
+        font-family: Georgia, serif;
+        font-weight: 400;
+        font-style: italic;
+        letter-spacing: -3px;
+      }
+      .hero p {
+        max-width: 660px;
+        font-size: 18px;
+        color: var(--muted);
+        margin: 0 0 28px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 18px;
+        padding: 12px 18px;
+        border-radius: 8px;
+        background: var(--ink);
+        color: var(--paper);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 650;
+      }
+      .hero-meta {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+      .quiet {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .overview {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .stat {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 22px;
+      }
+      .stat b {
+        display: block;
+        font-size: 34px;
+        letter-spacing: -1px;
+        line-height: 1.15;
+      }
+      .stat span {
+        display: block;
+        margin-top: 10px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .stat p {
+        margin: 5px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .method {
+        font-size: 13px;
+        margin: 18px 0 0;
+        color: var(--muted);
+      }
+      .toc {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding: 30px 0 34px;
+        border-bottom: 1px solid var(--line);
+      }
+      .toc a {
+        border: 1px solid var(--line);
+        border-radius: 99px;
+        padding: 7px 13px;
+        font-size: 12px;
+        text-decoration: none;
+      }
+      .toc a:hover {
+        background: var(--lime);
+        border-color: var(--lime);
+      }
+      section.evidence {
+        padding: 57px 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .section-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: start;
+        margin-bottom: 22px;
+      }
+      .number {
+        font-family: ui-monospace, Consolas, monospace;
+        color: var(--muted);
+        font-size: 12px;
+        margin: 0 0 10px;
+      }
+      .section-head h2 {
+        font-size: 32px;
+        line-height: 1.15;
+        letter-spacing: -1.3px;
+        margin: 0 0 10px;
+      }
+      .section-head p {
+        max-width: 610px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .badge {
+        flex-shrink: 0;
+        padding: 6px 10px;
+        border-radius: 99px;
+        border: 1px solid #cddcba;
+        background: #ecf6df;
+        font-size: 11px;
+        font-weight: 750;
+        white-space: nowrap;
+      }
+      .badge.warn {
+        background: var(--orange-bg);
+        border-color: #e2cfb2;
+        color: #865026;
+      }
+      .metrics {
+        display: flex;
+        gap: 32px;
+        margin: 28px 0;
+        flex-wrap: wrap;
+      }
+      .metrics div b {
+        font-size: 26px;
+        line-height: 1.2;
+        display: block;
+        letter-spacing: -1px;
+      }
+      .metrics div span {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .scope {
+        background: #eaf0e4;
+        border-left: 3px solid #b4ca96;
+        padding: 13px 17px;
+        font-size: 12px;
+        border-radius: 0 8px 8px 0;
+        margin: 18px 0 24px;
+      }
+      .scope strong {
+        font-weight: 750;
+      }
+      .replay {
+        border: 1px solid var(--line);
+        background: var(--white);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .replay-bar {
+        border-bottom: 1px solid var(--line);
+        padding: 14px 22px;
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        background: #f0f3ea;
+        font-size: 10px;
+        letter-spacing: 1px;
+        font-family: ui-monospace, Consolas, monospace;
+      }
+      .dot {
+        width: 7px;
+        height: 7px;
+        display: inline-block;
+        background: #6d8c50;
+        border-radius: 50%;
+        margin-right: 7px;
+      }
+      .options {
+        padding: 22px 22px 0;
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .options button {
+        border: 1px solid var(--line);
+        padding: 8px 12px;
+        border-radius: 7px;
+        color: var(--ink);
+        background: var(--white);
+        font-size: 12px;
+        cursor: pointer;
+        text-align: left;
+      }
+      .options button[aria-pressed="true"] {
+        background: var(--ink);
+        color: var(--lime);
+        border-color: var(--ink);
+      }
+      .result {
+        padding: 24px;
+      }
+      .question {
+        color: var(--muted);
+        font-size: 13px;
+        margin: 0 0 19px;
+      }
+      .question strong {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .clip-title {
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: -0.6px;
+        line-height: 1.3;
+        margin: 9px 0 16px;
+      }
+      .quote {
+        font-family: Georgia, serif;
+        font-size: 22px;
+        line-height: 1.55;
+        letter-spacing: -0.2px;
+        margin: 0;
+        padding: 0;
+        max-width: 830px;
+      }
+      .score-row {
+        display: flex;
+        gap: 24px;
+        flex-wrap: wrap;
+        margin-top: 23px;
+      }
+      .score-row span {
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .score-row b {
+        display: block;
+        font-size: 15px;
+        color: var(--ink);
+      }
+      .result-note {
+        margin: 20px 0 0;
+        border-top: 1px solid var(--line);
+        padding-top: 15px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .result-note.miss {
+        color: #884818;
+      }
+      .sources {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        font-size: 12px;
+        margin: 22px 0;
+      }
+      .sources a {
+        font-weight: 650;
+      }
+      .sources a span {
+        color: var(--muted);
+      }
+      details {
+        margin-top: 13px;
+      }
+      summary {
+        font-size: 12px;
+        cursor: pointer;
+        font-weight: 700;
+        padding: 11px 0;
+      }
+      details p {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        background: #edf0e7;
+        padding: 19px;
+        border-radius: 9px;
+        font:
+          11px/1.8 ui-monospace,
+          Consolas,
+          monospace;
+        color: var(--ink);
+        margin: 8px 0;
+      }
+      .table-scroll {
+        overflow: auto;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 12px;
+        text-align: left;
+      }
+      th {
+        font-size: 10px;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+      }
+      td,
+      th {
+        border-bottom: 1px solid var(--line);
+        padding: 11px 12px 11px 0;
+      }
+      td small {
+        display: block;
+        color: var(--muted);
+        margin-top: 3px;
+      }
+      td.score,
+      th.score {
+        text-align: right;
+        padding-right: 0;
+      }
+      .ledger {
+        display: grid;
+        gap: 12px;
+      }
+      .ledger-card {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--white);
+        padding: 21px 24px;
+      }
+      .ledger-top {
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        align-items: start;
+      }
+      .ledger-card h3 {
+        font-size: 16px;
+        line-height: 1.35;
+        margin: 5px 0 8px;
+      }
+      .ledger-card p {
+        font-size: 12px;
+        color: var(--muted);
+        margin: 5px 0;
+      }
+      .ledger-card blockquote {
+        font-size: 13px;
+        margin: 16px 0 7px;
+        padding-left: 14px;
+        border-left: 2px solid #c2d49c;
+      }
+      .ledger-person {
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .ledger-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .ledger-label {
+        display: block;
+        font:
+          10px/1.5 ui-monospace,
+          Consolas,
+          monospace;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      .ledger-evidence {
+        margin: 13px 0 0;
+        border-top: 1px solid var(--line);
+        padding-top: 14px;
+      }
+      .gate-state {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+      .state {
+        font-size: 38px;
+        line-height: 1.2;
+        font-weight: 750;
+        letter-spacing: -1.5px;
+      }
+      .state[data-state="BLOCKED"] {
+        color: #9b4825;
+      }
+      .state[data-state="UNKNOWN"] {
+        color: #997122;
+      }
+      .gate-reason {
+        font-size: 14px;
+        max-width: 650px;
+        margin: 8px 0 22px;
+      }
+      .proof-grid {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .proof-item {
+        padding: 5px 9px;
+        background: #eef3e8;
+        font-size: 11px;
+        border-radius: 5px;
+      }
+      .proof-item.missing {
+        background: var(--orange-bg);
+        color: #884818;
+      }
+      .memory-flow {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 24px 0;
+      }
+      .memory-step {
+        padding: 22px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+      }
+      .memory-step span {
+        display: block;
+        font:
+          10px ui-monospace,
+          Consolas,
+          monospace;
+        color: var(--muted);
+        margin-bottom: 17px;
+      }
+      .memory-step b {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 17px;
+        letter-spacing: -0.5px;
+      }
+      .memory-step p {
+        margin: 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .memory-step:last-child {
+        background: #e8f2da;
+      }
+      .transcript {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin: 14px 0;
+      }
+      .word {
+        padding: 6px 9px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        font-size: 12px;
+        background: #fff;
+      }
+      .word small {
+        display: block;
+        font-size: 9px;
+        color: var(--muted);
+        font-family: ui-monospace, Consolas, monospace;
+      }
+      .foot {
+        padding: 36px 0 55px;
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
+        align-items: center;
+        font-size: 12px;
+      }
+      .foot p {
+        max-width: 580px;
+        color: var(--muted);
+        margin: 0;
+      }
+      .noscript {
+        padding: 14px;
+        background: var(--orange-bg);
+      }
+      @media (max-width: 720px) {
+        .nav {
+          padding: 15px 20px;
+        }
+        .wrap {
+          padding: 0 20px;
+        }
+        .hero {
+          padding: 45px 0 32px;
+        }
+        .hero h1 {
+          letter-spacing: -2px;
+        }
+        .hero h1 span {
+          letter-spacing: -2px;
+        }
+        .hero p {
+          font-size: 16px;
+        }
+        .overview {
+          grid-template-columns: 1fr;
+        }
+        .stat {
+          padding: 18px;
+        }
+        .stat b {
+          font-size: 28px;
+        }
+        .toc {
+          padding-top: 25px;
+        }
+        .section-head {
+          flex-direction: column;
+          gap: 14px;
+        }
+        .section-head h2 {
+          font-size: 28px;
+        }
+        section.evidence {
+          padding: 40px 0;
+        }
+        .metrics {
+          gap: 24px;
+        }
+        .replay-bar {
+          font-size: 9px;
+          padding: 12px 16px;
+        }
+        .options {
+          padding: 17px 16px 0;
+        }
+        .options button {
+          font-size: 11px;
+        }
+        .result {
+          padding: 20px 16px;
+        }
+        .quote {
+          font-size: 19px;
+        }
+        .clip-title {
+          font-size: 19px;
+        }
+        .ledger-card {
+          padding: 18px 16px;
+        }
+        .ledger-grid {
+          grid-template-columns: 1fr;
+          gap: 7px;
+        }
+        .ledger-top {
+          gap: 12px;
+        }
+        .badge {
+          font-size: 10px;
+        }
+        .memory-flow {
+          grid-template-columns: 1fr;
+        }
+        .foot {
+          align-items: start;
+          flex-direction: column;
+        }
+        .state {
+          font-size: 32px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="nav" aria-label="Main">
+        <a class="brand" href="./index.html"
+          ><span class="mark">SG</span> Sarath Gentela</a
+        ><a href="./index.html">← Back to portfolio</a>
+      </nav>
+    </header>
+    <main class="wrap">
+      <div class="hero">
+        <div class="kicker">
+          Engineering evidence / captured 22 September 2026
+        </div>
+        <h1>Look under<br /><span>the interface.</span></h1>
+        <p>
+          Real repository runs, inspectable outputs, and the boundaries around
+          each result. Every source link points to the revision that was
+          checked.
+        </p>
+        <div class="hero-meta">
+          <a class="btn" href="./evidence/project-runs.json" download
+            >Download the run record <span aria-hidden="true">↗</span></a
+          ><span class="quiet"
+            >Public code · Synthetic fixtures · No credentials</span
+          >
+        </div>
+      </div>
+      <div class="overview" aria-label="Verification overview">
+        <div class="stat">
+          <b>34 + 5 + 15</b><span>Original tests passed directly</span>
+          <p>Clipopedia · Commitment Decay Engine · ReelForge</p>
+        </div>
+        <div class="stat">
+          <b>29</b><span>Artha execution tests</span>
+          <p>Passed with a documented Windows cleanup wrapper</p>
+        </div>
+        <div class="stat">
+          <b>Memory only</b><span>EchoFind local verification</span>
+          <p>State samples, CPU benchmark, and evaluation skeleton</p>
+        </div>
+      </div>
+      <p class="method">
+        Python 3.12.14 on Windows. No production traffic, private repositories,
+        live model calls, real broker orders, or team messages are part of this
+        verification.
+      </p>
+      <nav class="toc" aria-label="Evidence sections">
+        <a href="#clipopedia">01 Clipopedia</a
+        ><a href="#commitment">02 Commitments</a
+        ><a href="#artha">03 Artha Council</a><a href="#echofind">04 EchoFind</a
+        ><a href="#reelforge">05 ReelForge</a>
+      </nav>
+      <noscript
+        ><p class="noscript">
+          The saved replay controls need JavaScript. All results are also
+          available in the downloadable JSON run record.
+        </p></noscript
+      >
+      <section class="evidence" id="clipopedia">
+        <div class="section-head">
+          <div>
+            <div class="number">01 / RETRIEVAL YOU CAN INSPECT</div>
+            <h2>Clipopedia</h2>
+            <p>
+              Follow a question to the actual selected clip, then inspect the
+              other candidates.
+            </p>
+          </div>
+          <span class="badge">34 original tests passed</span>
+        </div>
+        <div class="metrics">
+          <div><b>13 / 14</b><span>Relevant first selections</span></div>
+          <div><b>1.000</b><span>Hit@3</span></div>
+          <div><b>0.964</b><span>Mean reciprocal rank</span></div>
+          <div><b>14 clips</b><span>Fictional evaluation corpus</span></div>
+        </div>
+        <div class="scope">
+          <strong>Scope of the measurement.</strong> The original pipeline ran
+          with a hash embedder, Jaccard reranker, and rule-based model. These
+          results measure a small synthetic demo. They do not establish
+          production accuracy or service latency.
+        </div>
+        <div class="replay">
+          <div class="replay-bar">
+            <span><i class="dot"></i>SAVED OUTPUT / ORIGINAL PIPELINE</span
+            ><span>OFFLINE REPLAY</span>
+          </div>
+          <div
+            class="options"
+            id="clip-options"
+            aria-label="Choose a recorded query"
+          ></div>
+          <div class="result" id="clip-result" aria-live="polite"></div>
+        </div>
+        <div class="sources">
+          <a
+            href="https://github.com/akira231097/clipopedia/blob/b2cc9d85c38117f5787dc364446f3d6bd500ce71/src/clipopedia/retrieval/pipeline.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Pipeline <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/clipopedia/blob/b2cc9d85c38117f5787dc364446f3d6bd500ce71/src/clipopedia/demo/corpus.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Fictional corpus <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/clipopedia/blob/b2cc9d85c38117f5787dc364446f3d6bd500ce71/evals/retrieval_eval.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Evaluation + labels <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <details class="reproduce">
+          <summary>Reproduce this check</summary>
+          <p>Run from a clean checkout of the pinned revision.</p>
+          <pre><code>git clone https://github.com/akira231097/clipopedia.git
+cd clipopedia
+git checkout b2cc9d85c38117f5787dc364446f3d6bd500ce71
+python -m pip install -e &quot;.[dev]&quot;
+python -m pytest -q
+python -m clipopedia demo
+python evals/retrieval_eval.py</code></pre>
+        </details>
+        <details>
+          <summary>Read the complete evaluation result</summary>
+          <pre>
+Corpus: 14 fictional clips · Labels: 14 queries
+Hit@1             0.929
+Hit@3             1.000
+Recall@5          1.000
+MRR               0.964
+Selection accuracy 0.929
+Local latency: p50 1.79 ms · p95 4.31 ms · p99 7.79 ms
+350 latency samples; deterministic offline substitutes only.</pre>
+          <p>
+            The startup-pricing query selects a fundraising narrative clip. That
+            observed miss is included in the replay above.
+          </p>
+        </details>
+      </section>
+      <section class="evidence" id="commitment">
+        <div class="section-head">
+          <div>
+            <div class="number">02 / FROM SPOKEN PROMISE TO EVIDENCE</div>
+            <h2>Commitment Decay Engine</h2>
+            <p>
+              Five transcript lines produce three commitments. Completion,
+              progress, and missing evidence lead to different outcomes.
+            </p>
+          </div>
+          <span class="badge">5 original tests passed</span>
+        </div>
+        <div class="metrics">
+          <div><b>3</b><span>Commitments extracted</span></div>
+          <div><b>1</b><span>Fulfilled by completion evidence</span></div>
+          <div><b>2</b><span>Remain open</span></div>
+        </div>
+        <div class="ledger" id="ledger"></div>
+        <details>
+          <summary>Inspect the exact input transcript</summary>
+          <pre id="cde-transcript"></pre>
+        </details>
+        <div class="scope">
+          <strong>Local-file demonstration.</strong> People and evidence are
+          fictional. The extractor is regex-based and reconciliation uses simple
+          term/actor matching. The generated nudge was not sent. Live Slack,
+          Linear, and GitHub integrations are not part of this repository.
+        </div>
+        <div class="sources">
+          <a
+            href="https://github.com/akira231097/commitment-decay-engine/blob/6068ad45bddbe777261a030b0d7618018d629fe7/examples/sample_transcript.txt"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Original transcript <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/commitment-decay-engine/blob/6068ad45bddbe777261a030b0d7618018d629fe7/examples/sample_evidence.json"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Original evidence <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/commitment-decay-engine/blob/6068ad45bddbe777261a030b0d7618018d629fe7/commitment_decay_engine/reconcile.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Reconciliation logic <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <details class="reproduce">
+          <summary>Reproduce this check</summary>
+          <p>Run from a clean checkout of the pinned revision.</p>
+          <pre><code>git clone https://github.com/akira231097/commitment-decay-engine.git
+cd commitment-decay-engine
+git checkout 6068ad45bddbe777261a030b0d7618018d629fe7
+python -m pip install -e &quot;.[dev]&quot;
+python -m pytest -q
+python -m commitment_decay_engine.cli demo --ledger demo-evidence-ledger</code></pre>
+          <p>
+            Choose a new ledger directory. The demo recreates its target
+            directory. All input fixtures are fictional.
+          </p>
+        </details>
+      </section>
+      <section class="evidence" id="artha">
+        <div class="section-head">
+          <div>
+            <div class="number">03 / A MODEL PROPOSAL MEETS A CODE GATE</div>
+            <h2>Artha Council</h2>
+            <p>
+              Inspect what the original execution coordinator does when the
+              evidence changes.
+            </p>
+          </div>
+          <span class="badge warn">29 tests · cleanup workaround</span>
+        </div>
+        <div class="replay">
+          <div class="replay-bar">
+            <span><i class="dot"></i>ORIGINAL COORDINATOR / FAKEBROKER</span
+            ><span>NO REAL ORDERS</span>
+          </div>
+          <div
+            class="options"
+            id="gate-options"
+            aria-label="Choose a recorded broker scenario"
+          ></div>
+          <div class="result" id="gate-result" aria-live="polite"></div>
+        </div>
+        <div class="scope">
+          <strong>Verification detail.</strong> The direct Windows run
+          encountered 20 teardown errors because SQLite files remained open
+          until garbage collection. An external wrapper called
+          <code>gc.collect()</code> before the existing teardown; all 29
+          execution/contract tests then passed. Application source and
+          assertions were unchanged. The complete repository suite was not run.
+        </div>
+        <p class="quiet">
+          This verifies software behavior with a fake broker. It does not
+          establish trading performance, returns, live execution volume, or
+          safety under every market condition.
+        </p>
+        <div class="sources">
+          <a
+            href="https://github.com/akira231097/artha-council/blob/bc3ef17b4ebc4a56004fc098209caa39919500f5/artha_mcp/execution.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Execution coordinator <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/artha-council/blob/bc3ef17b4ebc4a56004fc098209caa39919500f5/tests/test_mcp_execution.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Executed tests <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/artha-council/blob/bc3ef17b4ebc4a56004fc098209caa39919500f5/tests/mcp_helpers.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >FakeBroker fixture <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <details class="reproduce">
+          <summary>Reproduce this check</summary>
+          <p>Run from a clean checkout of the pinned revision.</p>
+          <pre><code>git clone https://github.com/akira231097/artha-council.git
+cd artha-council
+git checkout bc3ef17b4ebc4a56004fc098209caa39919500f5
+python -m pip install -e .
+python -m unittest tests.test_mcp_execution -v</code></pre>
+          <p>
+            On Windows, the direct command may reproduce the SQLite cleanup
+            errors. Download
+            <a href="./evidence/run-artha-windows.py" download
+              >the exact cleanup wrapper</a
+            >
+            into the checkout root, then run
+            <code>python run-artha-windows.py</code>. It calls garbage
+            collection before the original teardown and changes no assertions.
+          </p>
+        </details>
+      </section>
+      <section class="evidence" id="echofind">
+        <div class="section-head">
+          <div>
+            <div class="number">04 / CONVERSATION STATE, MADE EXPLICIT</div>
+            <h2>EchoFind</h2>
+            <p>
+              The original sample script demonstrates how a conversation
+              continues—and when a new topic resets its thread.
+            </p>
+          </div>
+          <span class="badge">Memory code executed</span>
+        </div>
+        <div class="memory-flow">
+          <div class="memory-step">
+            <span>TURN 01 / NEW THREAD</span><b>Sleep</b>
+            <p>Thread topic: sleep<br />History: [sleep]</p>
+          </div>
+          <div class="memory-step">
+            <span>TURN 02 / FOLLOW-UP</span><b>Caffeine</b>
+            <p>Thread topic: sleep<br />History: [sleep, caffeine]</p>
+          </div>
+          <div class="memory-step">
+            <span>TURN 03 / TOPIC SHIFT</span><b>Productivity</b>
+            <p>
+              Thread topic: productivity<br />History: [productivity]<br />Entities:
+              [Tim Ferriss]
+            </p>
+          </div>
+        </div>
+        <p class="quiet">
+          Values reproduced from the original sample script. The cards visualize
+          its output; they are not a live conversation or retrieved content.
+        </p>
+        <div class="metrics">
+          <div><b>0.028 ms</b><span>Memory-update p50</span></div>
+          <div><b>0.066 ms</b><span>Memory-update p95</span></div>
+          <div><b>3,000</b><span>Benchmark iterations</span></div>
+          <div><b>10</b><span>Retrieval labels validated</span></div>
+        </div>
+        <div class="scope">
+          <strong>Memory-only check.</strong> An import wrapper bypassed eager
+          online-service imports while loading the original memory and schema
+          modules unchanged. These are local CPU timings, not end-to-end search
+          latency. The retrieval harness ran in skeleton mode and emitted no
+          accuracy metrics. Sample scripts are demonstrations, not
+          assertion-based test counts.
+        </div>
+        <div class="sources">
+          <a
+            href="https://github.com/akira231097/echofind/blob/8b5a3ab9ecbc491ca290979eeeb2112c2de8c62f/engine/memory.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Memory state machine <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/echofind/blob/8b5a3ab9ecbc491ca290979eeeb2112c2de8c62f/benchmarks/memory_bench.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Original benchmark <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/echofind/blob/8b5a3ab9ecbc491ca290979eeeb2112c2de8c62f/evals/retrieval_eval.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Evaluation skeleton <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <details class="reproduce">
+          <summary>Reproduce this check</summary>
+          <p>Run from a clean checkout of the pinned revision.</p>
+          <pre><code>git clone https://github.com/akira231097/echofind.git
+cd echofind
+git checkout 8b5a3ab9ecbc491ca290979eeeb2112c2de8c62f
+python -m pip install &quot;pydantic&gt;=2&quot;
+python evals/retrieval_eval.py</code></pre>
+          <p>
+            Download
+            <a href="./evidence/run-echofind-memory.py" download
+              >the memory import wrapper</a
+            >
+            into the checkout root, then run:
+          </p>
+          <pre><code>python run-echofind-memory.py benchmarks/memory_bench.py
+python run-echofind-memory.py tests/test_memory_samples.py</code></pre>
+          <p>
+            The wrapper registers the engine package namespace to avoid
+            importing online clients. Original memory logic is unchanged. CPU
+            timing varies by machine.
+          </p>
+        </details>
+      </section>
+      <section class="evidence" id="reelforge">
+        <div class="section-head">
+          <div>
+            <div class="number">
+              05 / THE BOUNDARY BETWEEN A PLAN AND A RENDER
+            </div>
+            <h2>ReelForge</h2>
+            <p>
+              Tests exercise the transcript and media-domain boundaries. The
+              bundled sample makes word-level timing directly inspectable.
+            </p>
+          </div>
+          <span class="badge">15 original tests passed</span>
+        </div>
+        <div class="metrics">
+          <div><b>46 words</b><span>Bundled timed transcript</span></div>
+          <div><b>20.92 s</b><span>Sample transcript duration</span></div>
+          <div><b>No render</b><span>Video generation was not run</span></div>
+        </div>
+        <details>
+          <summary>Inspect the original sample words and timestamps</summary>
+          <div class="transcript" id="reel-transcript"></div>
+        </details>
+        <div class="scope">
+          <strong>What these tests establish.</strong> Ingest parsing,
+          malformed-word handling, caption/domain models, and timing aggregation
+          ran offline. No source video was supplied, no reel was generated, and
+          audiovisual quality was not measured. The repository's missing-Gemini
+          evaluator returns default scores; those are not measured quality
+          results.
+        </div>
+        <div class="sources">
+          <a
+            href="https://github.com/akira231097/reelforge/blob/c0d08c8de046901ba429b183e5c849335a25aa34/tests/test_models.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Domain-model tests <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/reelforge/blob/c0d08c8de046901ba429b183e5c849335a25aa34/tests/test_ingest.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Ingest tests <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/reelforge/blob/c0d08c8de046901ba429b183e5c849335a25aa34/samples/sample_transcript.json"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Timed sample transcript <span aria-hidden="true">↗</span></a
+          ><a
+            href="https://github.com/akira231097/reelforge/blob/c0d08c8de046901ba429b183e5c849335a25aa34/reelforge/quality/evaluator.py"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Evaluator + fallback <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <details class="reproduce">
+          <summary>Reproduce this check</summary>
+          <p>Run from a clean checkout of the pinned revision.</p>
+          <pre><code>git clone https://github.com/akira231097/reelforge.git
+cd reelforge
+git checkout c0d08c8de046901ba429b183e5c849335a25aa34
+python -m pip install pydantic requests python-dotenv
+python -m unittest discover -s tests -v</code></pre>
+        </details>
+      </section>
+    </main>
+    <footer class="wrap foot">
+      <p>
+        Each number has a scope. Each replay has a source. Use the pinned code
+        and the downloadable record to inspect the work.
+      </p>
+      <a href="./index.html">Back to portfolio ↗</a>
+    </footer>
+    <script type="application/json" id="run-data">
+      {
+        "schema_version": 1,
+        "captured_at": "2026-09-22",
+        "provenance": {
+          "runtime": "Python 3.12.14 on Windows",
+          "scope": "Original public source executed with synthetic fixtures. No online model, broker, or workplace integrations were called. Outputs below are saved replays, not live requests.",
+          "repositories": {
+            "echofind": {
+              "commit": "8b5a3ab9ecbc491ca290979eeeb2112c2de8c62f",
+              "readme": "https://github.com/akira231097/echofind/blob/8b5a3ab9ecbc491ca290979eeeb2112c2de8c62f/README.md"
+            },
+            "clipopedia": {
+              "commit": "b2cc9d85c38117f5787dc364446f3d6bd500ce71",
+              "readme": "https://github.com/akira231097/clipopedia/blob/b2cc9d85c38117f5787dc364446f3d6bd500ce71/README.md"
+            },
+            "artha-council": {
+              "commit": "bc3ef17b4ebc4a56004fc098209caa39919500f5",
+              "readme": "https://github.com/akira231097/artha-council/blob/bc3ef17b4ebc4a56004fc098209caa39919500f5/README.md"
+            },
+            "commitment-decay-engine": {
+              "commit": "6068ad45bddbe777261a030b0d7618018d629fe7",
+              "readme": "https://github.com/akira231097/commitment-decay-engine/blob/6068ad45bddbe777261a030b0d7618018d629fe7/README.md"
+            },
+            "reelforge": {
+              "commit": "c0d08c8de046901ba429b183e5c849335a25aa34",
+              "readme": "https://github.com/akira231097/reelforge/blob/c0d08c8de046901ba429b183e5c849335a25aa34/README.md"
+            }
+          }
+        },
+        "verification": {
+          "clipopedia": {
+            "tests_passed": 34,
+            "mode": "Original pytest suite; unmodified",
+            "corpus_clips": 14,
+            "labeled_queries": 14,
+            "hit_at_1": 0.929,
+            "hit_at_3": 1.0,
+            "recall_at_5": 1.0,
+            "mrr": 0.964,
+            "selection_accuracy": 0.929,
+            "latency_samples": 350,
+            "latency_ms": { "p50": 1.79, "p95": 4.31, "p99": 7.79 },
+            "scope": "Deterministic hash embedder, Jaccard reranker and rule-based LLM over fictional clips. These are not production accuracy or latency measurements."
+          },
+          "commitment": {
+            "tests_passed": 5,
+            "mode": "Original pytest suite; unmodified",
+            "extracted": 3,
+            "fulfilled": 1,
+            "open": 2
+          },
+          "reelforge": {
+            "tests_passed": 15,
+            "mode": "Original unittest suite; unmodified",
+            "scope": "Tests cover ingest, transcript parsing, caption/domain models. No reel was generated and no audiovisual quality was measured."
+          },
+          "artha": {
+            "tests_passed": 29,
+            "mode": "Original execution/contract tests with external Windows garbage-collection cleanup wrapper",
+            "caveat": "Direct run reached test assertions but 20 test teardowns failed with SQLite file-lock errors. Re-running with gc.collect() before each existing teardown passed all 29; source and assertions were unchanged. This is a focused suite, not all repository tests."
+          },
+          "echofind": {
+            "mode": "Memory-only sample and microbenchmark, plus retrieval skeleton",
+            "iterations": 3000,
+            "memory_update_ms": { "p50": 0.028, "p95": 0.066 },
+            "labels_validated": 10,
+            "caveat": "Service-import side effects were bypassed by registering the engine package namespace. Original memory.py, schemas.py, sample and benchmark ran unchanged. Sample scripts are demonstrations, not assertion-based test counts. No live retrieval quality or end-to-end latency was measured."
+          }
+        },
+        "clipopedia": [
+          {
+            "query": "how do you actually evaluate whether an AI agent works",
+            "analysis": {
+              "cleaned_query": "how do you actually evaluate whether an AI agent works",
+              "is_small_talk": false,
+              "intent": "search",
+              "complexity": "simple",
+              "guests": [],
+              "hosts": [],
+              "show": null,
+              "topics": ["actually", "evaluate", "whether", "ai", "agent"],
+              "hyde_documents": [
+                "how do you actually evaluate whether an AI agent works",
+                "In this episode the guest explains actually evaluate whether ai",
+                "A practical discussion about actually evaluate whether ai"
+              ],
+              "time_filter": {
+                "has_time_constraint": false,
+                "mode": "none",
+                "start_date": null,
+                "end_date": null,
+                "anchor_date": null,
+                "approx_window_days": null,
+                "sort_preference": null,
+                "gating": null,
+                "recall_ratio": null
+              }
+            },
+            "selected": {
+              "id": "clip-004",
+              "show": "Signal / Noise",
+              "episode": "Dr. Lena Ortiz on ai agents",
+              "guests": ["Dr. Lena Ortiz"],
+              "text": "Everyone demos an agent that works once. The hard part is evaluation: how do you measure whether it succeeds on the long tail of messy real inputs? Without an eval harness you are just shipping vibes.",
+              "published_date": "2026-09-19",
+              "rerank_score": 0.12,
+              "final_score": 0.15,
+              "retrieval_stage": "all"
+            },
+            "selection_reason": "Top-ranked clip; best lexical and semantic match for the request.",
+            "candidates": [
+              {
+                "id": "clip-004",
+                "show": "Signal / Noise",
+                "episode": "Dr. Lena Ortiz on ai agents",
+                "guests": ["Dr. Lena Ortiz"],
+                "text": "Everyone demos an agent that works once. The hard part is evaluation: how do you measure whether it succeeds on the long tail of messy real inputs? Without an eval harness you are just shipping vibes.",
+                "published_date": "2026-09-19",
+                "rerank_score": 0.12,
+                "final_score": 0.15,
+                "retrieval_stage": "all"
+              },
+              {
+                "id": "clip-000",
+                "show": "The Long Game",
+                "episode": "Dr. Lena Ortiz on ai agents",
+                "guests": ["Dr. Lena Ortiz"],
+                "text": "The leap with AI agents isn't raw intelligence, it's giving them reliable tools and letting them retry. Once an agent can call an API, read the result, and correct itself, you get genuinely autonomous workflows.",
+                "published_date": "2026-09-10",
+                "rerank_score": 0.06451612903225806,
+                "final_score": 0.08064516129032258,
+                "retrieval_stage": "all"
+              },
+              {
+                "id": "clip-002",
+                "show": "Builders & Backers",
+                "episode": "Priya Raman on burnout",
+                "guests": ["Priya Raman"],
+                "text": "Burnout didn't arrive as exhaustion for me. It showed up as cynicism. I stopped caring about the thing I'd bled for. The fix wasn't a vacation, it was rebuilding a team I could actually delegate to.",
+                "published_date": "2026-09-16",
+                "rerank_score": 0.038461538461538464,
+                "final_score": 0.04807692307692308,
+                "retrieval_stage": "all"
+              }
+            ],
+            "labeled_match": true,
+            "scope": "Replay of actual offline run. Fictional corpus and deterministic stand-in models; media links are placeholders."
+          },
+          {
+            "query": "anything recent on founder burnout",
+            "analysis": {
+              "cleaned_query": "anything recent on founder burnout",
+              "is_small_talk": false,
+              "intent": "search",
+              "complexity": "simple",
+              "guests": [],
+              "hosts": [],
+              "show": null,
+              "topics": ["anything", "recent", "founder", "burnout"],
+              "hyde_documents": [
+                "anything recent on founder burnout",
+                "In this episode the guest explains anything recent founder burnout",
+                "A practical discussion about anything recent founder burnout"
+              ],
+              "time_filter": {
+                "has_time_constraint": true,
+                "mode": "latest",
+                "start_date": null,
+                "end_date": null,
+                "anchor_date": null,
+                "approx_window_days": null,
+                "sort_preference": "latest",
+                "gating": "soft",
+                "recall_ratio": null
+              }
+            },
+            "selected": {
+              "id": "clip-002",
+              "show": "Builders & Backers",
+              "episode": "Priya Raman on burnout",
+              "guests": ["Priya Raman"],
+              "text": "Burnout didn't arrive as exhaustion for me. It showed up as cynicism. I stopped caring about the thing I'd bled for. The fix wasn't a vacation, it was rebuilding a team I could actually delegate to.",
+              "published_date": "2026-09-16",
+              "rerank_score": 0.041666666666666664,
+              "final_score": 0.05208333333333333,
+              "retrieval_stage": "recency_first"
+            },
+            "selection_reason": "Top-ranked clip; best lexical and semantic match for the request.",
+            "candidates": [
+              {
+                "id": "clip-002",
+                "show": "Builders & Backers",
+                "episode": "Priya Raman on burnout",
+                "guests": ["Priya Raman"],
+                "text": "Burnout didn't arrive as exhaustion for me. It showed up as cynicism. I stopped caring about the thing I'd bled for. The fix wasn't a vacation, it was rebuilding a team I could actually delegate to.",
+                "published_date": "2026-09-16",
+                "rerank_score": 0.041666666666666664,
+                "final_score": 0.05208333333333333,
+                "retrieval_stage": "recency_first"
+              },
+              {
+                "id": "clip-008",
+                "show": "Frontier Notes",
+                "episode": "Dr. Lena Ortiz on ai safety",
+                "guests": ["Dr. Lena Ortiz"],
+                "text": "The risk with autonomous agents isn't a dramatic rogue AI. It's a boring one that confidently does the wrong thing at scale because nobody put a human in the loop on the irreversible actions.",
+                "published_date": "2026-09-20",
+                "rerank_score": 0.0,
+                "final_score": 0.0,
+                "retrieval_stage": "recency_first"
+              },
+              {
+                "id": "clip-011",
+                "show": "The Long Game",
+                "episode": "Marcus Bell on productivity",
+                "guests": ["Marcus Bell"],
+                "text": "Deep work isn't about willpower, it's about geometry. I rearranged my calendar so that mornings are a single uninterrupted block. Protecting that one block changed my output more than any app ever did.",
+                "published_date": "2026-09-18",
+                "rerank_score": 0.0,
+                "final_score": 0.0,
+                "retrieval_stage": "recency_first"
+              }
+            ],
+            "labeled_match": true,
+            "scope": "Replay of actual offline run. Fictional corpus and deterministic stand-in models; media links are placeholders."
+          },
+          {
+            "query": "tips for deep work and protecting focus",
+            "analysis": {
+              "cleaned_query": "tips for deep work and protecting focus",
+              "is_small_talk": false,
+              "intent": "search",
+              "complexity": "simple",
+              "guests": [],
+              "hosts": [],
+              "show": null,
+              "topics": ["tips", "deep", "work", "protecting", "focus"],
+              "hyde_documents": [
+                "tips for deep work and protecting focus",
+                "In this episode the guest explains tips deep work protecting",
+                "A practical discussion about tips deep work protecting"
+              ],
+              "time_filter": {
+                "has_time_constraint": false,
+                "mode": "none",
+                "start_date": null,
+                "end_date": null,
+                "anchor_date": null,
+                "approx_window_days": null,
+                "sort_preference": null,
+                "gating": null,
+                "recall_ratio": null
+              }
+            },
+            "selected": {
+              "id": "clip-011",
+              "show": "The Long Game",
+              "episode": "Marcus Bell on productivity",
+              "guests": ["Marcus Bell"],
+              "text": "Deep work isn't about willpower, it's about geometry. I rearranged my calendar so that mornings are a single uninterrupted block. Protecting that one block changed my output more than any app ever did.",
+              "published_date": "2026-09-18",
+              "rerank_score": 0.12,
+              "final_score": 0.15,
+              "retrieval_stage": "all"
+            },
+            "selection_reason": "Top-ranked clip; best lexical and semantic match for the request.",
+            "candidates": [
+              {
+                "id": "clip-011",
+                "show": "The Long Game",
+                "episode": "Marcus Bell on productivity",
+                "guests": ["Marcus Bell"],
+                "text": "Deep work isn't about willpower, it's about geometry. I rearranged my calendar so that mornings are a single uninterrupted block. Protecting that one block changed my output more than any app ever did.",
+                "published_date": "2026-09-18",
+                "rerank_score": 0.12,
+                "final_score": 0.15,
+                "retrieval_stage": "all"
+              },
+              {
+                "id": "clip-006",
+                "show": "The Deep End",
+                "episode": "Priya Raman on leadership",
+                "guests": ["Priya Raman"],
+                "text": "The skill that gets you to ten people actively hurts you at fifty. Doing the work yourself was your superpower; now it's the bottleneck. Leadership at scale is mostly learning to be comfortable not touching the work.",
+                "published_date": "2026-09-04",
+                "rerank_score": 0.038461538461538464,
+                "final_score": 0.04807692307692308,
+                "retrieval_stage": "all"
+              },
+              {
+                "id": "clip-005",
+                "show": "Signal / Noise",
+                "episode": "Marcus Bell on remote work",
+                "guests": ["Marcus Bell"],
+                "text": "Remote work didn't kill culture, bad defaults did. If your default is a meeting, remote feels lonely and slow. If your default is a written doc anyone can comment on, remote feels faster than an office ever did.",
+                "published_date": "2026-08-25",
+                "rerank_score": 0.037037037037037035,
+                "final_score": 0.046296296296296294,
+                "retrieval_stage": "all"
+              }
+            ],
+            "labeled_match": true,
+            "scope": "Replay of actual offline run. Fictional corpus and deterministic stand-in models; media links are placeholders."
+          },
+          {
+            "query": "how should I think about startup pricing",
+            "analysis": {
+              "cleaned_query": "how should I think about startup pricing",
+              "is_small_talk": false,
+              "intent": "search",
+              "complexity": "simple",
+              "guests": [],
+              "hosts": [],
+              "show": null,
+              "topics": ["should", "think", "startup", "pricing"],
+              "hyde_documents": [
+                "how should I think about startup pricing",
+                "In this episode the guest explains should think startup pricing",
+                "A practical discussion about should think startup pricing"
+              ],
+              "time_filter": {
+                "has_time_constraint": false,
+                "mode": "none",
+                "start_date": null,
+                "end_date": null,
+                "anchor_date": null,
+                "approx_window_days": null,
+                "sort_preference": null,
+                "gating": null,
+                "recall_ratio": null
+              }
+            },
+            "selected": {
+              "id": "clip-010",
+              "show": "Builders & Backers",
+              "episode": "Sam Whitfield on fundraising",
+              "guests": ["Sam Whitfield"],
+              "text": "Investors don't fund features, they fund a story about an inevitable future. Your pitch should make them feel late, like this is already happening and they need to get on before the door closes.",
+              "published_date": "2026-09-01",
+              "rerank_score": 0.04,
+              "final_score": 0.05,
+              "retrieval_stage": "all"
+            },
+            "selection_reason": "Top-ranked clip; best lexical and semantic match for the request.",
+            "candidates": [
+              {
+                "id": "clip-010",
+                "show": "Builders & Backers",
+                "episode": "Sam Whitfield on fundraising",
+                "guests": ["Sam Whitfield"],
+                "text": "Investors don't fund features, they fund a story about an inevitable future. Your pitch should make them feel late, like this is already happening and they need to get on before the door closes.",
+                "published_date": "2026-09-01",
+                "rerank_score": 0.04,
+                "final_score": 0.05,
+                "retrieval_stage": "all"
+              },
+              {
+                "id": "clip-007",
+                "show": "The Deep End",
+                "episode": "Sam Whitfield on pricing",
+                "guests": ["Sam Whitfield"],
+                "text": "Most startups underprice out of fear. Your first ten customers should feel like the product is almost too cheap. If nobody is pushing back on price, you've left your whole runway on the table.",
+                "published_date": "2026-08-01",
+                "rerank_score": 0.03571428571428571,
+                "final_score": 0.03571428571428571,
+                "retrieval_stage": "all"
+              },
+              {
+                "id": "clip-006",
+                "show": "The Deep End",
+                "episode": "Priya Raman on leadership",
+                "guests": ["Priya Raman"],
+                "text": "The skill that gets you to ten people actively hurts you at fifty. Doing the work yourself was your superpower; now it's the bottleneck. Leadership at scale is mostly learning to be comfortable not touching the work.",
+                "published_date": "2026-09-04",
+                "rerank_score": 0.0,
+                "final_score": 0.0,
+                "retrieval_stage": "all"
+              }
+            ],
+            "labeled_match": false,
+            "scope": "Replay of actual offline run. Fictional corpus and deterministic stand-in models; media links are placeholders."
+          }
+        ],
+        "commitments": [
+          {
+            "person": "Maya",
+            "title": "Rewrite The Onboarding Email Copy Friday",
+            "utterance": "I will rewrite the onboarding email copy by Friday.",
+            "date": "2026-01-14",
+            "deadline": "Friday",
+            "status": "Fulfilled",
+            "matched": true,
+            "reason": "Matched completion evidence.",
+            "evidence": {
+              "source": "issue tracker",
+              "text": "Completed onboarding email copy rewrite and moved the launch checklist item to done.",
+              "actor": "Maya",
+              "date": "2026-01-16"
+            },
+            "nudge_policy": null,
+            "scope": "Actual bundled fictional-fixture run; no notifications sent."
+          },
+          {
+            "person": "Ava",
+            "title": "Handle The Api Rate Limit Issue",
+            "utterance": "I can handle the API rate limit issue today.",
+            "date": "2026-01-14",
+            "deadline": "today",
+            "status": "Open",
+            "matched": true,
+            "reason": "Matched progress evidence, but not enough to mark fulfilled.",
+            "evidence": {
+              "source": "team chat",
+              "text": "Working on the API rate limit issue; found the burst window bug and will patch next.",
+              "actor": "Ava",
+              "date": "2026-01-14"
+            },
+            "nudge_policy": null,
+            "scope": "Actual bundled fictional-fixture run; no notifications sent."
+          },
+          {
+            "person": "Liam",
+            "title": "Investigate Why Search Returning Stale Records",
+            "utterance": "Let me investigate why search is returning stale records.",
+            "date": "2026-01-14",
+            "deadline": "Not specified",
+            "status": "Open",
+            "matched": false,
+            "reason": "No related evidence found.",
+            "evidence": null,
+            "nudge_policy": {
+              "should_nudge": true,
+              "message": "Hey Liam - you mentioned 'Let me investigate why search is returning stale records.' in Demo product sync. I have not seen related activity yet. Want me to create a ticket for this, or has it been handled somewhere I have not checked?",
+              "reason": "Eligible for private nudge."
+            },
+            "scope": "Actual bundled fictional-fixture run; no notifications sent."
+          }
+        ],
+        "artha": [
+          {
+            "scenario": "valid_preview",
+            "preview_status": "PASS",
+            "final_status": "PASS",
+            "reasons": [],
+            "proof": {
+              "instrument": true,
+              "quote": true,
+              "funds": true,
+              "position": true,
+              "order_preview": true
+            },
+            "placement_message": null,
+            "retry_rejection": null,
+            "preview_calls": 1,
+            "fake_place_calls": 0,
+            "scope": "Actual original coordinator with FakeBroker fixture. No broker connection or real order."
+          },
+          {
+            "scenario": "stale_quote",
+            "preview_status": "BLOCKED",
+            "final_status": "BLOCKED",
+            "reasons": ["Broker quote is 90.0s old; limit is 30s."],
+            "proof": {
+              "instrument": true,
+              "quote": true,
+              "funds": true,
+              "position": true,
+              "order_preview": true
+            },
+            "placement_message": null,
+            "retry_rejection": null,
+            "preview_calls": 1,
+            "fake_place_calls": 0,
+            "scope": "Actual original coordinator with FakeBroker fixture. No broker connection or real order."
+          },
+          {
+            "scenario": "missing_proof",
+            "preview_status": "BLOCKED",
+            "final_status": "BLOCKED",
+            "reasons": ["Broker proof is missing or failed: funds."],
+            "proof": {
+              "instrument": true,
+              "quote": true,
+              "position": true,
+              "order_preview": true
+            },
+            "placement_message": null,
+            "retry_rejection": null,
+            "preview_calls": 1,
+            "fake_place_calls": 0,
+            "scope": "Actual original coordinator with FakeBroker fixture. No broker connection or real order."
+          },
+          {
+            "scenario": "ambiguous_submission",
+            "preview_status": "PASS",
+            "final_status": "UNKNOWN",
+            "reasons": [],
+            "proof": {
+              "instrument": true,
+              "quote": true,
+              "funds": true,
+              "position": true,
+              "order_preview": true
+            },
+            "placement_message": "Placement outcome is unknown after TimeoutError; do not retry until broker orders are reconciled.",
+            "retry_rejection": "Preview receipt is unknown, not ready.",
+            "preview_calls": 2,
+            "fake_place_calls": 1,
+            "scope": "Actual original coordinator with FakeBroker fixture. No broker connection or real order."
+          }
+        ],
+        "reelforge_transcript": {
+          "clip_id": "demo-001",
+          "duration": 20.92,
+          "words": [
+            { "word": "The", "start_time": 0.0, "end_time": 0.32 },
+            { "word": "biggest", "start_time": 0.38, "end_time": 0.88 },
+            { "word": "mistake", "start_time": 0.94, "end_time": 1.44 },
+            { "word": "people", "start_time": 1.5, "end_time": 1.95 },
+            { "word": "make", "start_time": 2.01, "end_time": 2.37 },
+            { "word": "is", "start_time": 2.43, "end_time": 2.7 },
+            { "word": "waiting", "start_time": 2.76, "end_time": 3.25 },
+            { "word": "for", "start_time": 3.31, "end_time": 3.62 },
+            { "word": "motivation", "start_time": 3.69, "end_time": 4.32 },
+            { "word": "to", "start_time": 4.38, "end_time": 4.65 },
+            { "word": "strike.", "start_time": 4.71, "end_time": 5.16 },
+            { "word": "Motivation", "start_time": 5.22, "end_time": 5.85 },
+            { "word": "is", "start_time": 5.91, "end_time": 6.18 },
+            { "word": "unreliable.", "start_time": 6.24, "end_time": 6.87 },
+            { "word": "Discipline", "start_time": 6.93, "end_time": 7.56 },
+            { "word": "is", "start_time": 7.62, "end_time": 7.89 },
+            { "word": "what", "start_time": 7.95, "end_time": 8.31 },
+            { "word": "carries", "start_time": 8.37, "end_time": 8.86 },
+            { "word": "you", "start_time": 8.92, "end_time": 9.23 },
+            { "word": "on", "start_time": 9.29, "end_time": 9.56 },
+            { "word": "the", "start_time": 9.62, "end_time": 9.93 },
+            { "word": "days", "start_time": 9.99, "end_time": 10.35 },
+            { "word": "you", "start_time": 10.41, "end_time": 10.72 },
+            { "word": "do", "start_time": 10.79, "end_time": 11.06 },
+            { "word": "not", "start_time": 11.12, "end_time": 11.43 },
+            { "word": "feel", "start_time": 11.49, "end_time": 11.85 },
+            { "word": "like", "start_time": 11.91, "end_time": 12.27 },
+            { "word": "showing", "start_time": 12.33, "end_time": 12.82 },
+            { "word": "up.", "start_time": 12.88, "end_time": 13.15 },
+            { "word": "Build", "start_time": 13.21, "end_time": 13.62 },
+            { "word": "a", "start_time": 13.68, "end_time": 13.9 },
+            { "word": "system", "start_time": 13.96, "end_time": 14.41 },
+            { "word": "you", "start_time": 14.47, "end_time": 14.79 },
+            { "word": "can", "start_time": 14.85, "end_time": 15.16 },
+            { "word": "trust,", "start_time": 15.22, "end_time": 15.62 },
+            { "word": "repeat", "start_time": 15.69, "end_time": 16.14 },
+            { "word": "it", "start_time": 16.2, "end_time": 16.47 },
+            { "word": "daily,", "start_time": 16.53, "end_time": 16.94 },
+            { "word": "and", "start_time": 17.0, "end_time": 17.32 },
+            { "word": "let", "start_time": 17.38, "end_time": 17.7 },
+            { "word": "small", "start_time": 17.75, "end_time": 18.16 },
+            { "word": "wins", "start_time": 18.21, "end_time": 18.57 },
+            { "word": "compound", "start_time": 18.63, "end_time": 19.17 },
+            { "word": "into", "start_time": 19.23, "end_time": 19.59 },
+            { "word": "something", "start_time": 19.65, "end_time": 20.23 },
+            { "word": "remarkable.", "start_time": 20.29, "end_time": 20.92 }
+          ]
+        },
+        "commitment_transcript": "Maya: I will rewrite the onboarding email copy by Friday.\nNoah: We should probably improve the dashboard someday.\nAva: I can handle the API rate limit issue today.\nMaya: I already fixed the broken signup link yesterday.\nLiam: Let me investigate why search is returning stale records.\n"
+      }
+    </script>
+    <script>
+      "use strict";
+      const runs = JSON.parse(document.getElementById("run-data").textContent);
+      const el = (tag, cls, text) => {
+        const x = document.createElement(tag);
+        if (cls) x.className = cls;
+        if (text !== undefined) x.textContent = text;
+        return x;
+      };
+      function addText(parent, tag, cls, text) {
+        const n = el(tag, cls, text);
+        parent.append(n);
+        return n;
+      }
+      function options(id, labels, callback) {
+        const area = document.getElementById(id);
+        labels.forEach((label, i) => {
+          const b = el("button", "", label);
+          b.type = "button";
+          b.setAttribute("aria-pressed", String(i === 0));
+          b.addEventListener("click", () => {
+            for (const child of area.children)
+              child.setAttribute("aria-pressed", "false");
+            b.setAttribute("aria-pressed", "true");
+            callback(i);
+          });
+          area.append(b);
+        });
+        callback(0);
+      }
+      function clip(index) {
+        const run = runs.clipopedia[index],
+          s = run.selected,
+          p = document.getElementById("clip-result");
+        p.replaceChildren();
+        addText(p, "p", "question", "Query: " + run.query);
+        addText(p, "div", "kicker", s.show + " / " + s.id);
+        addText(p, "h3", "clip-title", s.episode);
+        addText(p, "blockquote", "quote", "“" + s.text + "”");
+        const scores = addText(p, "div", "score-row");
+        [
+          ["Rerank score", s.rerank_score.toFixed(4)],
+          ["Final score", s.final_score.toFixed(4)],
+          ["Retrieval stage", s.retrieval_stage],
+        ].forEach(([label, value]) => {
+          const n = addText(scores, "span", "", label);
+          addText(n, "b", "", value);
+        });
+        addText(
+          p,
+          "p",
+          "result-note" + (!run.labeled_match ? " miss" : ""),
+          run.labeled_match
+            ? "Actual selected source text from the fictional corpus. The saved output links to placeholder media, so no playable media is presented here."
+            : "Observed miss: the labeled answer concerns startup pricing, but the pipeline selected a fundraising narrative. This is the first-result miss in the 14-query evaluation.",
+        );
+        const details = addText(p, "details");
+        addText(details, "summary", "", "Inspect the returned candidates");
+        const sc = addText(details, "div", "table-scroll"),
+          table = addText(sc, "table"),
+          head = addText(table, "thead"),
+          hr = addText(head, "tr");
+        ["Candidate", "Final score"].forEach((v, i) =>
+          addText(hr, "th", i ? "score" : "", v),
+        );
+        const body = addText(table, "tbody");
+        run.candidates.forEach((c) => {
+          const tr = addText(body, "tr"),
+            td = addText(tr, "td", "", c.episode);
+          addText(td, "small", "", c.id + " · " + c.show);
+          addText(tr, "td", "score", c.final_score.toFixed(4));
+        });
+      }
+      options(
+        "clip-options",
+        [
+          "Agent evaluation",
+          "Founder burnout",
+          "Deep work",
+          "An observed miss",
+        ],
+        clip,
+      );
+      document.getElementById("cde-transcript").textContent =
+        runs.commitment_transcript;
+      for (const item of runs.commitments) {
+        const card = el("article", "ledger-card"),
+          top = addText(card, "div", "ledger-top"),
+          intro = addText(top, "div");
+        addText(
+          intro,
+          "div",
+          "ledger-person",
+          item.person + " · " + item.deadline,
+        );
+        addText(intro, "h3", "", item.title);
+        addText(
+          top,
+          "span",
+          "badge" + (item.status === "Open" ? " warn" : ""),
+          item.status,
+        );
+        addText(card, "blockquote", "", "“" + item.utterance + "”");
+        const ev = addText(card, "div", "ledger-evidence");
+        addText(
+          ev,
+          "span",
+          "ledger-label",
+          item.evidence ? "Evidence observed" : "No matching evidence",
+        );
+        addText(ev, "p", "", item.evidence ? item.evidence.text : item.reason);
+        addText(ev, "p", "", item.reason);
+        if (item.nudge_policy) {
+          const detail = addText(card, "details");
+          addText(detail, "summary", "", "Inspect the generated nudge");
+          addText(detail, "p", "", item.nudge_policy.message);
+          addText(detail, "p", "", "Policy output only. No message was sent.");
+        }
+        document.getElementById("ledger").append(card);
+      }
+      function gate(index) {
+        const run = runs.artha[index],
+          p = document.getElementById("gate-result");
+        p.replaceChildren();
+        const state = addText(p, "div", "gate-state"),
+          big = addText(state, "div", "state", run.final_status);
+        big.dataset.state = run.final_status;
+        addText(
+          state,
+          "span",
+          "quiet",
+          run.final_status === "PASS"
+            ? "Preview receipt created; no submission attempted"
+            : run.final_status === "UNKNOWN"
+              ? "Outcome unresolved; repeat submission rejected"
+              : "Preview rejected before submission",
+        );
+        addText(
+          p,
+          "p",
+          "gate-reason",
+          run.placement_message ||
+            run.reasons.join(" ") ||
+            "The fake broker returned the required proof and a fresh quote within the approved price cap.",
+        );
+        const proof = addText(p, "div", "proof-grid");
+        ["instrument", "quote", "funds", "order_preview"].forEach((name) =>
+          addText(
+            proof,
+            "span",
+            "proof-item" + (!run.proof[name] ? " missing" : ""),
+            (run.proof[name] ? "✓ " : "× ") + name,
+          ),
+        );
+        const scores = addText(p, "div", "score-row");
+        [
+          ["Preview calls", run.preview_calls],
+          ["Fake placement calls", run.fake_place_calls],
+        ].forEach(([label, value]) => {
+          const n = addText(scores, "span", "", label);
+          addText(n, "b", "", String(value));
+        });
+        if (run.retry_rejection)
+          addText(
+            p,
+            "p",
+            "result-note",
+            "Exact retry rejection: “" + run.retry_rejection + "”",
+          );
+        else
+          addText(
+            p,
+            "p",
+            "result-note",
+            "Saved original-code outcome using the public FakeBroker fixture. No real broker was connected.",
+          );
+      }
+      options(
+        "gate-options",
+        [
+          "Valid preview",
+          "90-second-old quote",
+          "Missing funds proof",
+          "Timeout after submit",
+        ],
+        gate,
+      );
+      for (const word of runs.reelforge_transcript.words) {
+        const item = el("span", "word", word.word);
+        addText(
+          item,
+          "small",
+          "",
+          word.start_time.toFixed(2) + "–" + word.end_time.toFixed(2) + "s",
+        );
+        document.getElementById("reel-transcript").append(item);
+      }
+    </script>
+  </body>
+</html>

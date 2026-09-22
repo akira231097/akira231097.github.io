@@ -1,0 +1,67 @@
+PUBLIC PROJECT VERIFICATION
+Captured: 2026-09-22
+Runtime: Python 3.12.14 on Windows
+Inputs: Public source and fictional offline fixtures only.
+No production service or real broker was contacted.
+
+CLIPOPEDIA
+{
+  "tests_passed": 34,
+  "mode": "Original pytest suite; unmodified",
+  "corpus_clips": 14,
+  "labeled_queries": 14,
+  "hit_at_1": 0.929,
+  "hit_at_3": 1.0,
+  "recall_at_5": 1.0,
+  "mrr": 0.964,
+  "selection_accuracy": 0.929,
+  "latency_samples": 350,
+  "latency_ms": {
+    "p50": 1.79,
+    "p95": 4.31,
+    "p99": 7.79
+  },
+  "scope": "Deterministic hash embedder, Jaccard reranker and rule-based LLM over fictional clips. These are not production accuracy or latency measurements."
+}
+
+COMMITMENT
+{
+  "tests_passed": 5,
+  "mode": "Original pytest suite; unmodified",
+  "extracted": 3,
+  "fulfilled": 1,
+  "open": 2
+}
+
+REELFORGE
+{
+  "tests_passed": 15,
+  "mode": "Original unittest suite; unmodified",
+  "scope": "Tests cover ingest, transcript parsing, caption/domain models. No reel was generated and no audiovisual quality was measured."
+}
+
+ARTHA
+{
+  "tests_passed": 29,
+  "mode": "Original execution/contract tests with external Windows garbage-collection cleanup wrapper",
+  "caveat": "Direct run reached test assertions but 20 test teardowns failed with SQLite file-lock errors. Re-running with gc.collect() before each existing teardown passed all 29; source and assertions were unchanged. This is a focused suite, not all repository tests."
+}
+
+ECHOFIND
+{
+  "mode": "Memory-only sample and microbenchmark, plus retrieval skeleton",
+  "iterations": 3000,
+  "memory_update_ms": {
+    "p50": 0.028,
+    "p95": 0.066
+  },
+  "labels_validated": 10,
+  "caveat": "Service-import side effects were bypassed by registering the engine package namespace. Original memory.py, schemas.py, sample and benchmark ran unchanged. Sample scripts are demonstrations, not assertion-based test counts. No live retrieval quality or end-to-end latency was measured."
+}
+
+PINNED REVISIONS
+echofind: 8b5a3ab9ecbc491ca290979eeeb2112c2de8c62f
+clipopedia: b2cc9d85c38117f5787dc364446f3d6bd500ce71
+artha-council: bc3ef17b4ebc4a56004fc098209caa39919500f5
+commitment-decay-engine: 6068ad45bddbe777261a030b0d7618018d629fe7
+reelforge: c0d08c8de046901ba429b183e5c849335a25aa34
