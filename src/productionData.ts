@@ -18,7 +18,7 @@ export const productionSystems: ProductionSystem[] = [
     label: "PRODUCTION AGENT HARNESS",
     title: "Connecting model decisions to controlled execution.",
     summary:
-      "A creator request can span retrieval, editing, rendering, and written outputs. I implemented major control, context, and lifecycle capabilities within the production agent harness—and carried their state into the React experience.",
+      "Lucidream turns long recordings into branded clips and social posts, remembering each creator’s style and preferences. I implemented control, context, editing and recovery capabilities within its production agent harness, along with their React interface.",
     question:
       "How do you give an agent useful tools while keeping execution, authorization, and completion grounded in application state?",
     ownership:
