@@ -58,7 +58,22 @@ The site can also be hosted elsewhere:
 
 Upload the **contents of `dist/`** to a static host, or configure the host to run `npm ci` and `npm run build` with `dist` as its publish directory. Keep the generated asset and evidence directories together.
 
-Vite uses a relative base (`./`), which supports deployment at a domain root or a GitHub Pages project subpath. No application server, API keys, sign-in service, analytics integration, or database is required. Contact actions open email or copy the address; they do not submit a form.
+Vite uses a relative base (`./`), which supports deployment at a domain root or a GitHub Pages project subpath. No application server, private API keys, sign-in service, or database is required. Contact actions open email or copy the address; they do not submit a form.
+
+## Visitor analytics
+
+The site includes an optional Microsoft Clarity integration for the portfolio and evidence page. It is **inactive until a real project ID is configured** in `public/analytics-config.json`. Tracking starts only after a visitor selects **Allow analytics**. Local previews, visitors who decline, and browsers sending Global Privacy Control or Do Not Track signals do not load Clarity. Choices can be changed through **Privacy & analytics** in the footer.
+
+To activate it:
+
+1. Sign in at [Microsoft Clarity](https://clarity.microsoft.com/) and create a project for `https://akira231097.github.io/`.
+2. Copy the project's public ID from **Settings → Setup** into `clarityProjectId` in `public/analytics-config.json`. This tracking ID is public; do not add passwords, access tokens, or dashboard API keys.
+3. In Clarity's cookie settings, turn off setting cookies by default. This site explicitly grants analytics storage only after opt-in and denies advertising storage.
+4. Push the configuration change to `main`, then visit the public site and allow analytics. Confirm the visit in Clarity's live recordings and dashboard.
+
+The private Clarity dashboard shows distinct users for the selected date range, traffic sources, countries, devices, heatmaps, scroll behavior, and session replays. Counts are estimates of consenting browsers, not verified people. Different browsers/devices, cookie deletion, declined consent, ad blockers, and bots affect the count. Visits before activation cannot be reconstructed.
+
+Custom events identify `resume_open` (opening the PDF, not proof of a saved download), `project_open_<id>`, `evidence_open`, `github_click`, `linkedin_click`, `contact_email_click`, and `email_copy_click` (not proof that an email was sent). These appear in Clarity's Smart events and can be used to filter sessions. No names, email addresses, or custom visitor identifiers are sent by this integration.
 
 Canonical, social-image, robots, and sitemap URLs are configured for `https://akira231097.github.io/`. Update them together if a custom domain is added.
 

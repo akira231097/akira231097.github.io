@@ -802,6 +802,7 @@ function ProjectCard({
       </div>
       <button
         className="e-project-open"
+        data-analytics-event={"project_open_" + project.id}
         onClick={onOpen}
         aria-label={"Read " + project.title + " engineering case"}
       >
@@ -1397,7 +1398,12 @@ export default function EngineeringPortfolio() {
               sarath231097@gmail.com
               <Arrow external />
             </a>
-            <button className="e-copy" onClick={copyEmail} aria-live="polite">
+            <button
+              className="e-copy"
+              onClick={copyEmail}
+              aria-live="polite"
+              data-analytics-event="email_copy_click"
+            >
               {copied ? "✓ Email copied" : "Copy email address"}
             </button>
           </div>
