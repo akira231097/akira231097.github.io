@@ -62,16 +62,16 @@ Vite uses a relative base (`./`), which supports deployment at a domain root or 
 
 ## Visitor analytics
 
-The site includes an optional Microsoft Clarity integration for the portfolio and evidence page. It is **inactive until a real project ID is configured** in `public/analytics-config.json`. Tracking starts only after a visitor selects **Allow analytics**. Local previews, visitors who decline, and browsers sending Global Privacy Control or Do Not Track signals do not load Clarity. Choices can be changed through **Privacy & analytics** in the footer.
+The portfolio and evidence page use Microsoft Clarity in **cookieless mode**, with both analytics and advertising storage explicitly denied through its Consent V2 API. The script adds no popups, footer controls, visitor counts, or dashboard to the public website. Local previews and browsers sending Global Privacy Control or Do Not Track signals do not load Clarity. Any decline saved by the earlier opt-in version is also respected. The integration never grants visitor consent, sends custom visitor identifiers, or writes its own tracking identifiers to browser storage.
 
-To activate it:
+Project configuration:
 
-1. Sign in at [Microsoft Clarity](https://clarity.microsoft.com/) and create a project for `https://akira231097.github.io/`.
-2. Copy the project's public ID from **Settings → Setup** into `clarityProjectId` in `public/analytics-config.json`. This tracking ID is public; do not add passwords, access tokens, or dashboard API keys.
-3. In Clarity's cookie settings, turn off setting cookies by default. This site explicitly grants analytics storage only after opt-in and denies advertising storage.
-4. Push the configuration change to `main`, then visit the public site and allow analytics. Confirm the visit in Clarity's live recordings and dashboard.
+1. The owner-provided project ID is `yqptxl35d6`, configured in `public/analytics-config.json`. The `cookielessClarityProjectId` field is intentionally different from the old opt-in configuration, so cached copies of the old script cannot display a popup after activation. An empty ID disables analytics completely. This tracking ID is public; do not add passwords, access tokens, or dashboard API keys.
+2. Reports are available only after signing in to [Microsoft Clarity](https://clarity.microsoft.com/) as a project member.
+3. In the project's cookie settings, turn off setting cookies by default as an additional safeguard. The site also explicitly denies both storage types on every page visit.
+4. Publish changes by pushing to `main`. Confirm incoming visits in Clarity's live recordings and dashboard.
 
-The private Clarity dashboard shows distinct users for the selected date range, traffic sources, countries, devices, heatmaps, scroll behavior, and session replays. Counts are estimates of consenting browsers, not verified people. Different browsers/devices, cookie deletion, declined consent, ad blockers, and bots affect the count. Visits before activation cannot be reconstructed.
+The private Clarity dashboard provides page activity, device/country summaries, heatmaps, scroll behavior, and page-level recordings. **Its unique-user count is not a reliable count of distinct visitors in cookieless mode**: each page view receives a fresh ID, repeat visitors are counted again, and visits across pages are not joined. Returning-user metrics, funnels, attribution, and session duration also have limitations. See Microsoft's [reporting limitations without cookie consent](https://learn.microsoft.com/en-us/clarity/setup-and-installation/clarity-without-cookie-consent). No real names or email addresses are inferred, and visits before activation cannot be reconstructed.
 
 Custom events identify `resume_open` (opening the PDF, not proof of a saved download), `project_open_<id>`, `evidence_open`, `github_click`, `linkedin_click`, `contact_email_click`, and `email_copy_click` (not proof that an email was sent). These appear in Clarity's Smart events and can be used to filter sessions. No names, email addresses, or custom visitor identifiers are sent by this integration.
 
