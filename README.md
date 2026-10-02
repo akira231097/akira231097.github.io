@@ -75,6 +75,12 @@ The private Clarity dashboard provides page activity, device/country summaries, 
 
 Custom events identify `resume_open` (opening the PDF, not proof of a saved download), `project_open_<id>`, `evidence_open`, `github_click`, `linkedin_click`, `contact_email_click`, and `email_copy_click` (not proof that an email was sent). These appear in Clarity's Smart events and can be used to filter sessions. No names, email addresses, or custom visitor identifiers are sent by this integration.
 
+Additional events record section headings visible for at least a second (`section_view_<id>`), visible page time at 10/30/60 seconds, and `engaged_30s` when 30 seconds of visible time combines with a browser input event. These are behavioral signals, not proof of a human, attention, or intent. Project source links, architecture controls, project filters, and manual video controls have specific event names. Autoplay is not logged as a manual play action. Clarity's export API does not expose all these metrics; failed event queries must remain unavailable rather than being reported as zero.
+
+Outreach links may carry standard UTM campaign labels and a random `ref=m_<16 hex characters>` message code. The integration records the code as an `outreach_message` tag and carries it between portfolio/evidence pages. It never attaches it to external links or treats it as a visitor identity. Any recipient mapping belongs in a private local ledger outside this repository. Forwarding and email security scanning prevent a sent-link observation from confirming who visited. Names, email addresses, and private tokens must never be placed in URL parameters. The footer's [Privacy page](public/privacy.html) explains this use without a banner or sign-in requirement.
+
+For owner review and testing, use `https://akira231097.github.io/?portfolio_test=1`. This skips analytics for that page without writing a preference or identifier. To keep an evidence-page review out of analytics, also add `portfolio_test=1` to that page's URL. Untagged earlier outreach cannot be matched to its recipients retroactively.
+
 Canonical, social-image, robots, and sitemap URLs are configured for `https://akira231097.github.io/`. Update them together if a custom domain is added.
 
 The handoff archive includes source and the built site. It excludes `node_modules`; `npm ci` recreates dependencies from the lockfile. The Git repository tracks source files and public assets; generated builds and dependencies are excluded.

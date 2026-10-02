@@ -375,6 +375,7 @@ function ProductVideo({ id, name }: { id: string; name: string }) {
               setDuration(event.currentTarget.duration)
             }
             onClick={togglePlayback}
+            data-analytics-event={`video_${playing ? "pause" : "play"}_${id}_${selected + 1}`}
             aria-label={`${name}: ${clip.title}, silent product walkthrough`}
           >
             <a href={clip.src}>Open silent video</a>
@@ -384,6 +385,7 @@ function ProductVideo({ id, name }: { id: string; name: string }) {
               type="button"
               className="e-film-big-play"
               onClick={togglePlayback}
+              data-analytics-event={`video_play_${id}_${selected + 1}`}
               aria-label={`Play ${name}: ${clip.title}`}
             >
               <svg
@@ -402,6 +404,7 @@ function ProductVideo({ id, name }: { id: string; name: string }) {
           <button
             type="button"
             onClick={togglePlayback}
+            data-analytics-event={`video_${playing ? "pause" : "play"}_${id}_${selected + 1}`}
             aria-label={`${playing ? "Pause" : "Play"} ${name} video`}
           >
             {playing ? (
@@ -443,6 +446,7 @@ function ProductVideo({ id, name }: { id: string; name: string }) {
           <button
             type="button"
             onClick={() => setExpanded((current) => !current)}
+            data-analytics-event={`video_${expanded ? "collapse" : "expand"}_${id}_${selected + 1}`}
             aria-label={`${expanded ? "Close expanded" : "Expand"} ${name} video`}
           >
             <svg
@@ -487,6 +491,7 @@ function ProductVideo({ id, name }: { id: string; name: string }) {
                 className={selected === index ? "is-selected" : ""}
                 aria-pressed={selected === index}
                 onClick={() => setSelected(index)}
+                data-analytics-event={`video_example_${id}_${index + 1}`}
               >
                 <img src={option.poster} alt="" loading="lazy" />
                 <span>
@@ -965,9 +970,10 @@ export default function EngineeringPortfolio() {
               behind <span>reliable AI.</span>
             </h1>
             <p className="e-hero-description">
-              Agent harnesses. Multi-stage search and ranking. Asynchronous
-              infrastructure. I build the control, context, and state around
-              models that turn reasoning into verifiable application outcomes.
+              I build production AI agents and search systems: tools, memory,
+              RAG, and the Python/FastAPI, React, and AWS services around them.
+              At Spice / Lucidream, I work across the agent harness, retrieval,
+              and product interface.
             </p>
             <div className="e-hero-stack">
               <span>Python</span>
@@ -982,9 +988,13 @@ export default function EngineeringPortfolio() {
                 Explore production work
                 <Arrow />
               </a>
-              <a className="e-button e-button-secondary" href="#architecture">
-                Inspect the architecture
-                <Arrow />
+              <a
+                className="e-button e-button-secondary"
+                href="mailto:sarath231097@gmail.com?subject=AI%20engineering%20opportunity"
+                data-analytics-event="hero_contact_email_click"
+              >
+                Email me about a role
+                <Arrow external />
               </a>
             </div>
             <div className="e-person">
@@ -1236,6 +1246,10 @@ export default function EngineeringPortfolio() {
               <button
                 key={item}
                 onClick={() => setFilter(item)}
+                data-analytics-event={
+                  "project_filter_" +
+                  item.toLowerCase().replace(/[^a-z0-9]+/g, "_")
+                }
                 aria-pressed={filter === item}
               >
                 {item}
@@ -1433,6 +1447,9 @@ export default function EngineeringPortfolio() {
         </a>
         <p>Production work. Public code. Explicit evidence.</p>
         <span className="e-mono">© {new Date().getFullYear()}</span>
+        <a className="e-privacy-link" href="./privacy.html">
+          Privacy
+        </a>
         <a href="#top" aria-label="Back to top">
           ↑
         </a>

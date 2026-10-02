@@ -1866,6 +1866,13 @@ svg {
   font-size: 9px;
   color: #819caf;
 }
+.e-footer > .e-privacy-link {
+  font-size: 10px;
+  color: #819caf;
+}
+.e-footer > .e-privacy-link:hover {
+  color: var(--e-cyan);
+}
 .e-footer > a:last-child {
   border: 1px solid #355369;
   border-radius: 50%;

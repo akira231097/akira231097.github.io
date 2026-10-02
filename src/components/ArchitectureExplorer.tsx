@@ -363,6 +363,9 @@ export default function ArchitectureExplorer({
         else nodeRefs.current.delete(node.id);
       }}
       onClick={() => setSelectedId(node.id)}
+      data-analytics-event={`architecture_node_${diagram.id}_${node.id}`
+        .replace(/[^a-z0-9_]/g, "_")
+        .slice(0, 80)}
       onKeyDown={(event) => onNodeKey(event, node)}
     >
       <span className="ax-node-top">
@@ -395,6 +398,9 @@ export default function ArchitectureExplorer({
               aria-controls={`${instance}-panel`}
               tabIndex={diagram.id === item.id ? 0 : -1}
               onClick={() => switchDiagram(item.id)}
+              data-analytics-event={`architecture_view_${item.id}`
+                .replace(/[^a-z0-9_]/g, "_")
+                .slice(0, 80)}
               onKeyDown={(event) => onTabKey(event, index)}
             >
               <span>{String(index + 1).padStart(2, "0")}</span>
