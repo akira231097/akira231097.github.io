@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, ReactNode } from "react";
 import ArchitectureExplorer from "./components/ArchitectureExplorer";
+import EmailContactButton from "./components/EmailContactButton";
 import type {
   ArchitectureDiagram,
   ArchitectureNode,
@@ -988,14 +989,7 @@ export default function EngineeringPortfolio() {
                 Explore production work
                 <Arrow />
               </a>
-              <a
-                className="e-button e-button-secondary"
-                href="mailto:sarath231097@gmail.com?subject=AI%20engineering%20opportunity"
-                data-analytics-event="hero_contact_email_click"
-              >
-                Email me about a role
-                <Arrow external />
-              </a>
+              <EmailContactButton />
             </div>
             <div className="e-person">
               <img

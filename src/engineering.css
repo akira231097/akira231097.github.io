@@ -317,10 +317,100 @@ svg {
   margin-top: 27px;
   flex-wrap: wrap;
 }
-.e-hero-actions > .e-button {
+.e-hero-actions .e-button {
   font-size: 11px;
   gap: 17px;
   padding-inline: 16px;
+}
+.e-email-contact {
+  position: relative;
+}
+.e-email-attention {
+  border-color: #70d8e688;
+  animation: e-email-glow 4.5s ease-in-out infinite;
+}
+.e-email-attention:hover,
+.e-email-attention:focus-visible,
+.e-email-attention[aria-expanded="true"] {
+  animation: none;
+  box-shadow: 0 0 0 3px #70d8e619;
+}
+@keyframes e-email-glow {
+  0%,
+  75%,
+  100% {
+    box-shadow: 0 0 0 0 #70d8e600;
+  }
+  35% {
+    box-shadow:
+      0 0 0 4px #70d8e622,
+      0 0 20px #70d8e618;
+  }
+}
+.e-email-options {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 25;
+  width: 284px;
+  max-width: calc(100vw - 40px);
+  padding: 16px;
+  border: 1px solid #3a5865;
+  border-radius: 9px;
+  background: #101a26;
+  box-shadow: 0 12px 32px #0007;
+}
+.e-email-options > p {
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 650;
+}
+.e-email-options > a,
+.e-email-options > button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px;
+  border: 1px solid #2d414f;
+  border-radius: 5px;
+  margin-top: 8px;
+  background: #142131;
+  font-size: 12px;
+  text-align: left;
+}
+.e-email-options > a:hover,
+.e-email-options > button:hover {
+  background: #1a3040;
+  border-color: #597383;
+}
+.e-email-options > a:first-of-type {
+  color: var(--e-cyan);
+}
+.e-email-options > input {
+  width: 100%;
+  margin-top: 12px;
+  padding: 9px 2px;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--e-muted);
+  font-size: 12px;
+}
+.e-email-options > input:focus-visible {
+  outline: 2px solid var(--e-cyan);
+  outline-offset: 2px;
+}
+.e-email-status {
+  display: block;
+  margin-top: 8px;
+  color: var(--e-lime);
+  font-size: 11px;
+  line-height: 1.6;
+}
+.e-email-status:empty {
+  display: none;
 }
 .e-person {
   display: flex;
@@ -2152,7 +2242,7 @@ svg {
   .e-hero-copy > .e-eyebrow {
     font-size: 10px;
   }
-  .e-hero-actions > .e-button {
+  .e-hero-actions .e-button {
     font-size: 12px;
   }
   .e-scope-input strong {
@@ -2211,7 +2301,7 @@ svg {
   .e-hero-actions {
     gap: 9px;
   }
-  .e-hero-actions > .e-button {
+  .e-hero-actions .e-button {
     font-size: 10px;
     padding: 12px 13px;
     gap: 11px;
@@ -2411,7 +2501,7 @@ svg {
     height: 33px;
     width: 33px;
   }
-  .e-hero-actions > .e-button {
+  .e-hero-actions .e-button {
     font-size: 9px;
     min-height: 42px;
   }
@@ -2844,7 +2934,7 @@ svg {
     gap: 10px;
     margin-top: 24px;
   }
-  .e-hero-actions > .e-button {
+  .e-hero-actions .e-button {
     font-size: 10px;
     min-height: 44px;
     padding-inline: 13px;
@@ -3528,7 +3618,7 @@ svg {
     font-size: 8px;
     padding: 6px 8px;
   }
-  .e-hero-actions > .e-button {
+  .e-hero-actions .e-button {
     font-size: 9px;
     gap: 9px;
     padding-inline: 11px;
