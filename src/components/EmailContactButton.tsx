@@ -5,7 +5,6 @@ const subject = "AI engineering opportunity";
 const gmailUrl =
   "https://mail.google.com/mail/?" +
   new URLSearchParams({ view: "cm", fs: "1", to: emailAddress, su: subject });
-const mailtoUrl = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}`;
 
 export default function EmailContactButton() {
   const [open, setOpen] = useState(false);
@@ -87,9 +86,6 @@ export default function EmailContactButton() {
             data-analytics-event="contact_gmail_open"
           >
             Open Gmail <span aria-hidden="true">↗</span>
-          </a>
-          <a href={mailtoUrl} data-analytics-event="hero_contact_email_click">
-            Use my email app <span aria-hidden="true">↗</span>
           </a>
           <input
             ref={addressRef}
